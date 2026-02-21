@@ -3,14 +3,15 @@ $pageTitle = 'Fitwings – Programmes';
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
+<header class="prog-banner">
+  <h1>Nos <span>Programmes</span> Fitwings</h1>
+  <p>Trouvez l'entraînement adapté à vos objectifs</p>
+</header>
+
 <main class="prog-container">
 
-  <header class="prog-header">
-    <h1>Nos Programmes Fitwings</h1>
-    <p>Trouvez l'entraînement adapté à vos objectifs</p>
-  </header>
-
   <!-- Filtres -->
+  <p class="prog-filters-label">Filtrer par objectif ou niveau</p>
   <div class="prog-objectifs-buttons">
     <button type="button" data-filter="all" class="active">Tout</button>
     <button type="button" data-filter="perte-de-poids">Perte de poids</button>

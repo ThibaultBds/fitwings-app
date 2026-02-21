@@ -3,6 +3,8 @@ const popup = document.getElementById("prog-popup");
 const popupText = document.getElementById("prog-popup-text");
 const closeBtn = document.querySelector(".prog-close");
 
+if (!popup || !closeBtn) { /* pas de popup sur cette page */ }
+
 // Contenu détaillé pour chaque activité
 const programmeInfos = {
   course: `
@@ -44,37 +46,43 @@ const programmeInfos = {
 };
 
 // Ouvrir popup
-document.querySelectorAll(".prog-btn-popup").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const infoKey = btn.getAttribute("data-info");
-    popupText.innerHTML = programmeInfos[infoKey];
-    popup.style.display = "block";
+if (popup && popupText && closeBtn) {
+  document.querySelectorAll(".prog-btn-popup").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const infoKey = btn.getAttribute("data-info");
+      popupText.innerHTML = programmeInfos[infoKey];
+      popup.style.display = "block";
+    });
   });
-});
 
-// Fermer popup
-closeBtn.addEventListener("click", () => {
-  popup.style.display = "none";
-});
-window.addEventListener("click", (e) => {
-  if (e.target === popup) popup.style.display = "none";
-});
+  closeBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+  window.addEventListener("click", (e) => {
+    if (e.target === popup) popup.style.display = "none";
+  });
+}
 
 // --- Gestion du filtrage ---
 const filterButtons = document.querySelectorAll(".prog-objectifs-buttons button");
-const cards = document.querySelectorAll(".prog-card");
+const cards = document.querySelectorAll(".programme-card");
+const noResults = document.getElementById("no-results");
 
 filterButtons.forEach(button => {
   button.addEventListener("click", () => {
     const filter = button.getAttribute("data-filter");
 
+    filterButtons.forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+
+    let visible = 0;
     cards.forEach(card => {
-      if (card.getAttribute("data-type").includes(filter) || filter === "all") {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
+      const categories = card.getAttribute("data-category") || "";
+      const show = filter === "all" || categories.split(" ").includes(filter);
+      card.style.display = show ? "block" : "none";
+      if (show) visible++;
     });
+
+    if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
   });
 });
-""  

@@ -35,6 +35,14 @@ nav a:hover {
   color: var(--bg);
 }
 
+/* Actions droite (toggle + burger) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 /* Burger */
 .burger {
   display: none;

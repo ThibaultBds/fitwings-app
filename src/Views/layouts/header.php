@@ -18,12 +18,6 @@ if (session_status() === PHP_SESSION_NONE) {
   <header class="header">
     <div class="logo">🔥 Fitwings</div>
 
-    <button class="burger" id="burger" aria-label="Ouvrir le menu">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
-
-    <button id="dark-toggle" aria-label="Basculer mode sombre" title="Mode sombre">🌙</button>
-
     <nav id="nav-menu">
       <ul>
         <li><a href="/">Accueil</a></li>
@@ -55,6 +49,13 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php endif; ?>
       </ul>
     </nav>
+
+    <div class="header-actions">
+      <button id="dark-toggle" aria-label="Basculer mode sombre" title="Mode sombre">🌙</button>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
   </header>
 
   <script src="/assets/js/navbar.js" defer></script>

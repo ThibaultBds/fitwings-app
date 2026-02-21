@@ -26,19 +26,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<main class="container">
+<main>
 
-  <!-- HERO / RECHERCHE -->
-  <section class="card form-container">
-    <h2>Rechercher une salle</h2>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Dépassez vos limites.<br>Chaque jour.</h1>
+      <p class="hero-sub">Programmes sur mesure, coachs certifiés, 3 salles en France.</p>
+      <div class="hero-ctas">
+        <a href="/programmes" class="prog-btn">Voir les programmes</a>
+        <a href="/register" class="hero-btn-outline">Rejoindre Fitwings</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="stat">
+      <span class="stat-number">2 400+</span>
+      <span class="stat-label">Membres actifs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">18</span>
+      <span class="stat-label">Coachs certifiés</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">40+</span>
+      <span class="stat-label">Programmes disponibles</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Salles en France</span>
+    </div>
+  </section>
+
+  <!-- RECHERCHE -->
+  <section class="container card form-container" style="margin-top:40px;">
+    <h2>Trouver une salle près de chez vous</h2>
     <form method="post" action="" class="search-form">
-      <input
-        type="text"
-        name="ville"
-        placeholder="Ex : Paris, Lyon, Marseille..."
-        value="<?= $ville ?>"
-        required
-      />
+      <input type="text" name="ville" placeholder="Ex : Paris, Lyon, Marseille..." value="<?= $ville ?>" required />
       <button type="submit" class="btn-search">
         <span class="material-symbols-outlined">search</span>
       </button>
@@ -51,21 +78,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
   </section>
 
-  <!-- PRÉSENTATION -->
-  <section class="card">
-    <h2>Bienvenue chez Fitwings</h2>
-    <p>Bougez, vivez, progressez !</p>
-    <ul class="fw-list">
-      <li>Un espace lumineux et moderne</li>
-      <li>Équipements dernière génération</li>
-      <li>Coachs diplômés à l'écoute</li>
-      <li>Valeurs : respect, entraide, dépassement</li>
-    </ul>
+  <!-- POURQUOI FITWINGS -->
+  <section class="container valeurs">
+    <h2 class="section-title">Pourquoi Fitwings ?</h2>
+    <div class="valeurs-grid">
+      <div class="valeur-card card">
+        <span class="material-symbols-outlined valeur-icon">emoji_events</span>
+        <h3>Résultats prouvés</h3>
+        <p>Programmes conçus par des experts pour des résultats visibles en 4 semaines.</p>
+      </div>
+      <div class="valeur-card card">
+        <span class="material-symbols-outlined valeur-icon">groups</span>
+        <h3>Communauté soudée</h3>
+        <p>Entraide, motivation collective et esprit d'équipe au cœur de chaque séance.</p>
+      </div>
+      <div class="valeur-card card">
+        <span class="material-symbols-outlined valeur-icon">fitness_center</span>
+        <h3>Équipements premium</h3>
+        <p>Machines dernière génération, entretenues quotidiennement pour votre confort.</p>
+      </div>
+    </div>
   </section>
 
   <!-- TÉMOIGNAGES -->
-  <section class="card">
-    <h2>Témoignages</h2>
+  <section class="container" style="margin-bottom:60px;">
+    <h2 class="section-title">Ce que disent nos membres</h2>
     <div class="temoignages">
       <div class="temoignage">
         <p>"Ambiance motivante et coachs à l'écoute !"</p>

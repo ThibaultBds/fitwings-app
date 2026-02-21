@@ -12,7 +12,7 @@
 /* Classe pour activer le mode clair */
 
 body.light-mode, .light-mode {
-    --primary: #07bff;
+    --primary: #0077ff;
     --accent: #00bfae;
     --bg: #f5f7fb;
     --bg-dark: #ffffff;
@@ -29,7 +29,12 @@ body.light-mode, .light-mode {
 body {
     font-family: 'Montsrrat', 'Segoe UI', Arial, sans-serif;
     background: var(--bg);
-    color: var(--test);
+    color: var(--text);
     line-height: 1.5;
 }
 
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 16px;
+}

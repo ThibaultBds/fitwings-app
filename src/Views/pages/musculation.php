@@ -40,14 +40,17 @@ require_once __DIR__ . '/../layouts/header.php';
     <h3>Le matériel essentiel 🏋️</h3>
     <div class="muscu-matos">
       <div class="matos-item">
+        <img src="/assets/images/muscu2.jpg" alt="Haltères" class="matos-img">
         <h4>Haltères</h4>
         <p>Polyvalents et accessibles, ils permettent de cibler chaque muscle avec une grande amplitude.</p>
       </div>
       <div class="matos-item">
+        <img src="/assets/images/muscu.jpg" alt="Barre olympique" class="matos-img">
         <h4>Barre olympique</h4>
         <p>Indispensable pour les mouvements complets : squat, développé couché, soulevé de terre.</p>
       </div>
       <div class="matos-item">
+        <img src="/assets/images/muscu3.jpg" alt="Machines guidées" class="matos-img">
         <h4>Machines guidées</h4>
         <p>Sécurisées et efficaces, elles sont idéales pour isoler un muscle et travailler en précision.</p>
       </div>

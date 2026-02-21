@@ -26,7 +26,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <nav id="nav-menu">
       <ul>
-        <li><a href="/index.php">Accueil</a></li>
+        <li><a href="/">Accueil</a></li>
 
         <li class="dropdown">
           <a href="#">Prestations ▾</a>
@@ -39,6 +39,8 @@ if (session_status() === PHP_SESSION_NONE) {
           </ul>
         </li>
 
+        <li><a href="/temoignages">Témoignages</a></li>
+        <li><a href="/carriere">Carrière</a></li>
         <li><a href="/pages/contact">Contact</a></li>
 
         <?php if (isset($_SESSION['user_id'])): ?>

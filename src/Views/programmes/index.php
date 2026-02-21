@@ -112,7 +112,7 @@ require_once __DIR__ . '/../layouts/header.php';
     <a href="/pages/contact" class="prog-btn">🔥 Rejoindre Fitwings</a>
   </div>
 
+  <script defer src="/assets/js/script.js"></script>
 </main>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
-<script defer src="/assets/js/script.js"></script>

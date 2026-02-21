@@ -2,6 +2,22 @@
    PAGES.CSS — Styles spécifiques à chaque page
    ============================================= */
 
+/* ─── Images ─── */
+.cw-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.matos-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
 /* ─── Utilitaires communs ─── */
 .fw-list {
   list-style: none;
@@ -561,4 +577,133 @@
   font-size: 1.6rem;
   margin-bottom: 20px;
   color: var(--primary);
+}
+
+/* ─── CONTACT ─── */
+.contact-main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+.contact-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.contact-hero h1 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.contact-form-section {
+  margin-bottom: 40px;
+}
+.contact-form-section h2 {
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+.contact-infos {
+  margin-bottom: 40px;
+}
+.contact-infos h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.contact-item h3 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.form-success {
+  background: rgba(26,188,156,0.15);
+  border-left: 4px solid #1abc9c;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  color: #1abc9c;
+}
+.form-error {
+  background: rgba(231,76,60,0.15);
+  border-left: 4px solid #e74c3c;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  color: #e74c3c;
+}
+
+/* ─── CARRIÈRE ─── */
+.carriere-main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+.carriere-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.carriere-hero h1 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.carriere-postes {
+  margin-top: 32px;
+}
+.carriere-postes h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+.poste-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.poste-card {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid var(--primary);
+}
+.poste-card h3 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+/* ─── TÉMOIGNAGES ─── */
+.temoignages-main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+.temoignages-main h1 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.temoignage-card {
+  margin-bottom: 16px;
+}
+
+/* ─── ADMIN / MODERATOR ─── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.admin-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 12px 14px;
+  text-align: left;
+}
+.admin-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: middle;
+}
+.admin-table tr:hover td {
+  background: rgba(255,152,0,0.05);
 }

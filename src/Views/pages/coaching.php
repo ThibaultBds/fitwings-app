@@ -14,17 +14,17 @@ require_once __DIR__ . '/../layouts/header.php';
     <h2>Nos Coachs</h2>
     <div class="cw-cards">
       <div class="cw-card">
-        <div class="cw-avatar">💪</div>
+        <img src="/assets/images/alex.jpg" alt="Coach Alex" class="cw-img">
         <h3>Alex</h3>
         <p>Spécialiste en musculation & prise de masse</p>
       </div>
       <div class="cw-card">
-        <div class="cw-avatar">🏃</div>
+        <img src="/assets/images/sarah.jpg" alt="Coach Sarah" class="cw-img">
         <h3>Sarah</h3>
         <p>Experte cardio & perte de poids</p>
       </div>
       <div class="cw-card">
-        <div class="cw-avatar">🧘</div>
+        <img src="/assets/images/karim.jpg" alt="Coach Karim" class="cw-img">
         <h3>Karim</h3>
         <p>Coach bien-être, mobilité & renforcement</p>
       </div>

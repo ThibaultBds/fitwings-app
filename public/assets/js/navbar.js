@@ -24,10 +24,15 @@ if (dropdown && dropdownMenu) {
     dropdownMenu.classList.remove("show");
   });
 
-  // Mode mobile : ouverture au clic
-  dropdown.addEventListener("click", (e) => {
-    // éviter de suivre le lien "#"
-    e.preventDefault();
-    dropdownMenu.classList.toggle("show");
-  });
+  // Mode mobile : ouverture au clic sur le lien toggle uniquement
+  const dropdownToggle = dropdown.querySelector("a");
+  if (dropdownToggle) {
+    dropdownToggle.addEventListener("click", (e) => {
+      // éviter de suivre le lien "#" mais laisser passer les clics sur les sous-liens
+      if (dropdownToggle.getAttribute("href") === "#") {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+      }
+    });
+  }
 }

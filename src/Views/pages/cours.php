@@ -3,12 +3,12 @@ $pageTitle = 'Fitwings – Cours Collectifs';
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<main class="cc-main">
+<header class="page-banner">
+  <h1>Cours <span>Collectifs</span></h1>
+  <p>Progressez ensemble dans une ambiance motivante et conviviale 💪</p>
+</header>
 
-  <section class="cc-hero">
-    <h1>📅 Cours Collectifs Fitwings</h1>
-    <p>Progressez ensemble dans une ambiance motivante et conviviale 💪</p>
-  </section>
+<main class="cc-main">
 
   <section class="cc-list">
     <div class="cc-card">

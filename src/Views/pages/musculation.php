@@ -3,18 +3,12 @@ $pageTitle = 'Fitwings – Musculation';
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<main class="muscu-main">
+<header class="page-banner">
+  <h1>Musculation <span>Fitwings</span></h1>
+  <p>S'entraîner intelligemment pour des résultats durables 💪</p>
+</header>
 
-  <section class="muscu-hero">
-    <h1 class="muscu-title">
-      S'entraîner, c'est bien… <br>
-      Mais s'entraîner intelligemment, c'est mieux 💪
-    </h1>
-    <p class="muscu-subtitle">
-      Débutant ou confirmé, progresse plus vite, évite les blessures et atteins enfin tes objectifs
-      grâce à une approche structurée et efficace.
-    </p>
-  </section>
+<main class="muscu-main">
 
   <section class="muscu-content">
     <ul class="fw-list">

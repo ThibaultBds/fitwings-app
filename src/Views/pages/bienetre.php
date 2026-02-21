@@ -3,12 +3,12 @@ $pageTitle = 'Fitwings – Bien-être & Santé';
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<main class="fw-section">
+<header class="page-banner">
+  <h1>Bien-être <span>&amp; Santé</span></h1>
+  <p>Retrouvez équilibre, sérénité et énergie avec Fitwings</p>
+</header>
 
-  <section class="fw-hero">
-    <h1>😌 Bien-être & Santé</h1>
-    <p>Retrouvez équilibre, sérénité et énergie avec Fitwings</p>
-  </section>
+<main class="fw-section">
 
   <section class="fw-intro">
     <div class="fw-intro-text">

@@ -3,15 +3,15 @@ $pageTitle = 'Fitwings – Cardio';
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
+<header class="page-banner">
+  <h1>Cardio <span>Fitwings</span></h1>
+  <p>Musclez votre cœur, gagnez en énergie, respirez mieux 🌬️</p>
+</header>
+
 <main class="fw-cardio-wrapper">
 
-  <div class="fw-cardio-slogan">
-    Musclez votre cœur ❤️ <br>
-    Faites-le vibrer, gagnez en énergie, respirez mieux 🌬️
-  </div>
-
   <div class="fw-cardio-bloc">
-    <div class="fw-cardio-textbox">
+    <div class="page-info-block">
       <p><strong>Le saviez-vous ?</strong></p>
       <p>Un cœur entraîné bat <span class="highlight">40 à 50 fois par minute</span> au repos,
       contre <span class="highlight">70 à 80 fois</span> pour une personne sédentaire.</p>
@@ -20,7 +20,7 @@ require_once __DIR__ . '/../layouts/header.php';
     </div>
   </div>
 
-  <div class="fw-cardio-programme">
+  <div class="page-highlight">
     <p>🔥 Un programme sur-mesure : 3 séances de 30 min par semaine suffisent pour des résultats visibles en 6 semaines.</p>
   </div>
 

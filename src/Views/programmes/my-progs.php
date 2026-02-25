@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Mes programmes';
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <main class="container">
@@ -17,4 +17,4 @@ require_once __DIR__ . '/../layouts/header.php';
   </section>
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

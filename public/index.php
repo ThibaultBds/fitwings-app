@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/') ?: '/';
 
@@ -47,7 +49,7 @@ if (isset($routes[$uri])) {
     require $routes[$uri];
 } else {
     http_response_code(404);
-    require __DIR__ . '/../src/Views/layouts/header.php';
+    require __DIR__ . '/../src/Views/templates/header.php';
     echo '<main class="container"><div class="card" style="text-align:center;"><h1>404</h1><p>Page introuvable.</p><a href="/" class="prog-btn">Retour à l\'accueil</a></div></main>';
-    require __DIR__ . '/../src/Views/layouts/footer.php';
+    require __DIR__ . '/../src/Views/templates/footer.php';
 }

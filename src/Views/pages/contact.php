@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Contact';
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 
 $success = false;
 $erreur = '';
@@ -68,4 +68,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

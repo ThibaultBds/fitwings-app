@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Programmes';
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <header class="prog-banner">
@@ -116,4 +116,4 @@ require_once __DIR__ . '/../layouts/header.php';
   <script defer src="/assets/js/script.js"></script>
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

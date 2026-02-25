@@ -9,7 +9,7 @@ if ($_SESSION['role'] !== 'admin') {
     header('Location: /'); exit;
 }
 
-require_once __DIR__ . '/../../layouts/header.php';
+require_once __DIR__ . '/../../templates/header.php';
 // TODO: $users = User::findAll(); depuis le Model
 $users_demo = [
     ['id' => 1, 'username' => 'admin',   'email' => 'admin@fitwings.fr',   'role' => 'admin',      'created_at' => '2025-01-01'],
@@ -63,4 +63,4 @@ $users_demo = [
   </section>
 </main>
 
-<?php require_once __DIR__ . '/../../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../../templates/footer.php'; ?>

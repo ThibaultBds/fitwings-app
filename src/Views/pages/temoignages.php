@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Témoignages';
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 
 $file = __DIR__ . '/../../../../storage/temoignages.json';
 $dir  = dirname($file);
@@ -59,4 +59,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

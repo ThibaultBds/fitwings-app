@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Inscription';
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <main class="auth-main">
@@ -36,4 +36,4 @@ require_once __DIR__ . '/../layouts/header.php';
   </div>
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: /login'); exit;
 }
 
-require_once __DIR__ . '/../layouts/header.php';
+require_once __DIR__ . '/../templates/header.php';
 // TODO: $user = User::findById($_SESSION['user_id']); depuis le Model
 $user = [
     'username'   => $_SESSION['username'] ?? 'Utilisateur',
@@ -46,4 +46,4 @@ $user = [
   </section>
 </main>
 
-<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/') ?: '/';
 
@@ -21,6 +23,9 @@ $routes = [
     '/pages/coaching'      => __DIR__ . '/../src/Views/pages/coaching.php',
     '/pages/bienetre'      => __DIR__ . '/../src/Views/pages/bienetre.php',
 
+    // Abonnements
+    '/abonnements'         => __DIR__ . '/../src/Views/pages/abonnements.php',
+
     // Pages
     '/pages/contact'       => __DIR__ . '/../src/Views/pages/contact.php',
     '/carriere'            => __DIR__ . '/../src/Views/pages/carriere.php',
@@ -28,6 +33,10 @@ $routes = [
     '/pages/legal'         => __DIR__ . '/../src/Views/pages/legal.php',
     '/pages/privacy'       => __DIR__ . '/../src/Views/pages/privacy.php',
     '/pages/terms'         => __DIR__ . '/../src/Views/pages/terms.php',
+
+    // Salles de sport
+    '/salles'              => __DIR__ . '/../src/Views/salles/index.php',
+    '/salles/show'         => __DIR__ . '/../src/Views/salles/show.php',
 
     // Auth & compte
     '/login'               => __DIR__ . '/../src/Views/auth/login.php',
@@ -42,6 +51,12 @@ $routes = [
 // Route dynamique : /programmes/show?id=X
 if ($uri === '/programmes/show' && isset($_GET['id'])) {
     require __DIR__ . '/../src/Views/programmes/show.php';
+    exit;
+}
+
+// Route dynamique : /salles/show?id=X
+if ($uri === '/salles/show' && isset($_GET['id'])) {
+    require __DIR__ . '/../src/Views/salles/show.php';
     exit;
 }
 

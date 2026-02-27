@@ -100,6 +100,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </section>
 
+  <!-- ABONNEMENTS -->
+  <section class="home-abos container">
+    <h2 class="section-title">Nos abonnements</h2>
+    <p class="home-abos-sub">Un tarif adapté à chaque objectif, sans mauvaises surprises.</p>
+    <div class="home-abos-grid">
+      <div class="home-abo-card">
+        <h3>Essentiel</h3>
+        <div class="home-abo-price">29<span>€/mois</span></div>
+        <p>Accès salle, cardio, vestiaires</p>
+      </div>
+      <div class="home-abo-card home-abo-card--featured">
+        <div class="home-abo-badge">Populaire</div>
+        <h3>Premium</h3>
+        <div class="home-abo-price">49<span>€/mois</span></div>
+        <p>+ Cours collectifs &amp; coaching mensuel</p>
+      </div>
+      <div class="home-abo-card">
+        <h3>Elite</h3>
+        <div class="home-abo-price">79<span>€/mois</span></div>
+        <p>Coach dédié, séances illimitées</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="/abonnements" class="btn-primary">Voir tous nos abonnements</a>
+    </div>
+  </section>
+
   <!-- TÉMOIGNAGES -->
   <section class="container" style="margin-bottom:60px;">
     <h2 class="section-title">Ce que disent nos membres</h2>

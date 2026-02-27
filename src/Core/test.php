@@ -1,12 +1,14 @@
-<?php
+<?php 
 
-class A {
-    public $name = "Fitwings";
+    public function getByNiveau(string $niveau): array
+{
+    $stmt = $this->pdo->prepare(
+        "SELECT * FROM programmes WHERE niveau = :niveau"
+    );
 
-    function test() {
-        var_dump($this);
-    }
+    $stmt->execute([
+        'niveau' => $niveau
+    ]);
+
+    return $stmt->fetchAll();
 }
-
-$a = new A();
-$a->test();

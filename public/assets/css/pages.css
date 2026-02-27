@@ -2,6 +2,370 @@
    PAGES.CSS — Styles spécifiques à chaque page
    ============================================= */
 
+/* ─── Accueil — teaser abonnements ─── */
+
+.home-abos { margin-bottom: 60px; }
+.home-abos-sub {
+  text-align: center;
+  opacity: .65;
+  margin-top: -16px;
+  margin-bottom: 32px;
+  font-size: .95rem;
+}
+.home-abos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.home-abo-card {
+  background: var(--bg-dark);
+  border-radius: 16px;
+  padding: 28px 22px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 20px var(--shadow);
+  transition: transform 0.2s;
+}
+.home-abo-card:hover { transform: translateY(-3px); }
+.home-abo-card--featured {
+  border: 2px solid var(--primary);
+  box-shadow: 0 8px 32px rgba(255,152,0,0.18);
+}
+.home-abo-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.home-abo-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.home-abo-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.home-abo-price span {
+  font-size: .85rem;
+  font-weight: 400;
+  color: var(--text);
+  opacity: .6;
+}
+.home-abo-card p {
+  font-size: .83rem;
+  opacity: .6;
+}
+
+/* ─── Abonnements — Tarifs ─── */
+
+.tarif-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 32px 0 40px;
+}
+.tarif-toggle-label {
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.tarif-toggle-label.active { opacity: 1; font-weight: 700; }
+.tarif-promo {
+  background: var(--accent);
+  color: #fff;
+  font-size: .72rem;
+  font-style: normal;
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-left: 5px;
+}
+.tarif-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+.tarif-switch input { opacity: 0; width: 0; height: 0; }
+.tarif-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-dark);
+  border: 2px solid var(--primary);
+  border-radius: 26px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.tarif-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.tarif-switch input:checked + .tarif-slider::before { transform: translateY(-50%) translateX(24px); }
+
+.tarif-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.tarif-card {
+  background: var(--bg-dark);
+  border-radius: 20px;
+  padding: 36px 28px 32px;
+  box-shadow: 0 8px 32px var(--shadow);
+  position: relative;
+  transition: transform 0.2s;
+}
+.tarif-card:hover { transform: translateY(-4px); }
+.tarif-card--featured {
+  border: 2px solid var(--primary);
+  box-shadow: 0 12px 48px rgba(255,152,0,0.22);
+  transform: scale(1.03);
+}
+.tarif-card--featured:hover { transform: scale(1.03) translateY(-4px); }
+
+.tarif-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.tarif-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.tarif-desc {
+  font-size: .88rem;
+  opacity: .65;
+  margin-bottom: 20px;
+}
+
+.tarif-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+.tarif-amount {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+.tarif-currency {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.tarif-currency small { font-size: .8rem; opacity: .6; }
+
+.tarif-features {
+  list-style: none;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tarif-features li {
+  font-size: .93rem;
+  padding-left: 24px;
+  position: relative;
+}
+.tarif-features li::before {
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.tarif-features li.ok::before { content: '✓'; color: var(--accent); }
+.tarif-features li.ko {
+  opacity: .4;
+  text-decoration: line-through;
+}
+.tarif-features li.ko::before { content: '×'; color: #e74c3c; }
+
+.tarif-btn {
+  display: block;
+  text-align: center;
+  padding: 13px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.tarif-btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+}
+.tarif-btn-primary:hover { opacity: .88; transform: scale(1.03); }
+.tarif-btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+.tarif-btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* FAQ */
+.tarif-faq {
+  margin-top: 72px;
+  padding-bottom: 40px;
+}
+.tarif-faq h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 32px;
+}
+.tarif-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.tarif-faq-item {
+  background: var(--bg-dark);
+  border-radius: 14px;
+  padding: 22px 20px;
+}
+.tarif-faq-item h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+.tarif-faq-item p { font-size: .88rem; opacity: .75; line-height: 1.6; }
+
+/* ─── Carte abonné (espace compte) ─── */
+
+.membre-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 24px auto 0;
+  height: 220px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,152,0,0.2);
+  padding: 26px 28px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.membre-card::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255,152,0,0.08);
+  top: -60px;
+  right: -60px;
+}
+.membre-card::after {
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(26,188,156,0.07);
+  bottom: -40px;
+  left: -40px;
+}
+.membre-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.membre-card-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+.membre-card-plan {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  background: rgba(26,188,156,0.15);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(26,188,156,0.3);
+}
+.membre-card-chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #d4a843, #f5d78e);
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+}
+.membre-card-bottom {
+  position: relative;
+  z-index: 1;
+}
+.membre-card-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.membre-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: .72rem;
+  opacity: .6;
+  letter-spacing: .5px;
+}
+.membre-card-number {
+  font-size: .8rem;
+  letter-spacing: 3px;
+  opacity: .4;
+  font-family: monospace;
+  margin-top: 2px;
+}
+.membre-card-no-plan {
+  text-align: center;
+  padding: 20px;
+  opacity: .6;
+  font-size: .9rem;
+}
+.membre-card-no-plan a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+.membre-card-no-plan a:hover { text-decoration: underline; }
+
 /* ─── Hero ─── */
 .hero {
   position: relative;

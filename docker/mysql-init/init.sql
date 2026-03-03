@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('user', 'moderateur', 'admin') DEFAULT 'user',
+    role ENUM('user', 'coach', 'moderateur', 'admin') DEFAULT 'user',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -64,12 +64,24 @@ CREATE TABLE IF NOT EXISTS programme_utilisateur (
     UNIQUE (user_id, programme_id)
 );
 
+CREATE TABLE IF NOT EXISTS coachs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT DEFAULT NULL,
+    nom VARCHAR(100) NOT NULL,
+    specialite VARCHAR(100),
+    bio TEXT,
+    photo VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
 CREATE TABLE IF NOT EXISTS salle (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
     adresse TEXT,
     ville VARCHAR(100),
     code_postal VARCHAR(10),
+    telephone VARCHAR(20),
     email VARCHAR(255) UNIQUE,
-    horaires VARCHAR(100)
+    horaires VARCHAR(255),
+    description TEXT
 );

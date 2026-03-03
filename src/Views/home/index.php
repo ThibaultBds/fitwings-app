@@ -2,28 +2,6 @@
 $pageTitle = 'Fitwings – Accueil';
 require_once __DIR__ . '/../templates/header.php';
 
-$ville = '';
-$message = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $villeBrut = isset($_POST['ville']) ? trim($_POST['ville']) : '';
-    if ($villeBrut !== '') {
-        $ville = htmlspecialchars($villeBrut, ENT_QUOTES, 'UTF-8');
-        switch (strtolower($villeBrut)) {
-            case 'paris':
-                $message = "Salle Fitwings Paris : 10 rue du Sport, Paris 15e. Ouvert 6h-23h.";
-                break;
-            case 'lyon':
-                $message = "Salle Fitwings Lyon : 25 avenue du Fitness, Lyon 3e. Cours collectifs tous les jours.";
-                break;
-            case 'marseille':
-                $message = "Salle Fitwings Marseille : 8 boulevard du Gym, Marseille 6e. Vue mer, muscu & cardio.";
-                break;
-            default:
-                $message = "Aucune salle Fitwings trouvée pour cette ville. Essayez Paris, Lyon ou Marseille.";
-        }
-    }
-}
 ?>
 
 <main>
@@ -64,18 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- RECHERCHE -->
   <section class="container card form-container" style="margin-top:40px;">
     <h2>Trouver une salle près de chez vous</h2>
-    <form method="post" action="" class="search-form">
-      <input type="text" name="ville" placeholder="Ex : Paris, Lyon, Marseille..." value="<?= $ville ?>" required />
+    <form method="get" action="/salles" class="search-form">
+      <input type="text" name="ville" placeholder="Ex : Paris, Lyon, Marseille..." required />
       <button type="submit" class="btn-search">
         <span class="material-symbols-outlined">search</span>
       </button>
     </form>
-    <?php if ($ville !== ''): ?>
-      <div class="resultat-ville">
-        <span class="material-symbols-outlined">location_on</span>
-        <strong><?= ucfirst($ville) ?></strong> : <?= $message ?>
-      </div>
-    <?php endif; ?>
   </section>
 
   <!-- POURQUOI FITWINGS -->

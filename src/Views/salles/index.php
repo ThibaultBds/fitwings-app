@@ -1,57 +1,108 @@
 <?php
-$pageTitle = 'Fitwings – Salles de sport';
+$pageTitle = 'FitWings – Salles de sport';
 require_once __DIR__ . '/../templates/header.php';
-
-$ville = htmlspecialchars($_GET['ville'] ?? '');
+$count = count($salles ?? []);
 ?>
 
-<header class="prog-banner">
-  <h1>Salles de sport à <span><?= $ville ?: 'votre ville' ?></span></h1>
-  <p>Trouvez la salle qu'il vous faut près de chez vous</p>
+<header class="salles-banner">
+  <div class="salles-banner__inner">
+    <span class="salles-banner__label">Réseau FitWings</span>
+    <h1>
+      <?php if (!empty($ville)): ?>
+        Salles à <span><?= htmlspecialchars($ville) ?></span>
+      <?php else: ?>
+        Trouvez votre salle
+      <?php endif; ?>
+    </h1>
+    <p>Accès à toutes nos salles partout en France avec votre abonnement</p>
+  </div>
 </header>
 
 <main class="prog-container">
 
-  <!-- Formulaire de recherche -->
-  <section class="card form-container">
-    <form action="/salles" method="GET" class="objectif-form">
-      <label for="ville">Rechercher une autre ville :</label>
-      <div style="display:flex; gap:1rem;">
-        <input type="text" name="ville" id="ville" placeholder="Ex : Paris, Lyon..." value="<?= $ville ?>" required>
-        <button type="submit" class="prog-btn">Rechercher</button>
-      </div>
+  <!-- Barre de recherche -->
+  <div class="salles-search-wrap">
+    <form action="/salles" method="GET" class="salles-search-form">
+      <span class="material-symbols-outlined">search</span>
+      <input type="text" name="ville" id="ville"
+             placeholder="Paris, Lyon, Marseille..."
+             value="<?= htmlspecialchars($ville ?? '') ?>">
+      <button type="submit">Rechercher</button>
     </form>
-  </section>
+  </div>
 
-  <!-- Résultats -->
-  <section class="prog-grid">
+  <?php if (!empty($salles)): ?>
 
-    <?php if (!empty($ville)): ?>
-      <h2>Résultats pour "<?= $ville ?>"</h2>
-    <?php endif; ?>
+    <div class="salles-results-header">
+      <span class="salles-count"><?= $count ?> salle<?= $count > 1 ? 's' : '' ?> trouvée<?= $count > 1 ? 's' : '' ?></span>
+      <span class="salles-results-city">dans "<?= htmlspecialchars($ville) ?>"</span>
+    </div>
 
-    <?php if (!empty($salles)): ?>
-      <div class="cards-grid">
-        <?php foreach ($salles as $salle): ?>
-          <div class="programme-card">
-            <h3><?= htmlspecialchars($salle['nom']) ?></h3>
-            <p><?= htmlspecialchars($salle['adresse']) ?></p>
-            <?php if (!empty($salle['telephone'])): ?>
-              <p><?= htmlspecialchars($salle['telephone']) ?></p>
-            <?php endif; ?>
-            <a href="/salles/show?id=<?= (int)$salle['id'] ?>" class="prog-btn">Voir détails</a>
+    <div class="salles-grid">
+      <?php foreach ($salles as $s): ?>
+        <article class="salle-card">
+
+          <div class="salle-card__top">
+            <div class="salle-card__icon-wrap">
+              <span class="material-symbols-outlined">fitness_center</span>
+            </div>
+            <div>
+              <h3 class="salle-card__name"><?= htmlspecialchars($s['nom']) ?></h3>
+              <span class="salle-card__city">
+                <span class="material-symbols-outlined">location_on</span>
+                <?= htmlspecialchars($s['ville']) ?>
+              </span>
+            </div>
           </div>
-        <?php endforeach; ?>
-      </div>
 
-    <?php elseif (!empty($ville)): ?>
-      <p>Aucune salle trouvée pour "<?= $ville ?>".</p>
+          <address class="salle-card__address">
+            <?= htmlspecialchars($s['adresse']) ?>
+            <?php if (!empty($s['code_postal'])): ?>
+              — <?= htmlspecialchars($s['code_postal']) ?>
+            <?php endif; ?>
+          </address>
 
-    <?php else: ?>
-      <p>Entrez une ville pour lancer la recherche.</p>
-    <?php endif; ?>
+          <div class="salle-card__chips">
+            <?php if (!empty($s['telephone'])): ?>
+              <a href="tel:<?= htmlspecialchars($s['telephone']) ?>" class="salle-chip salle-chip--phone">
+                <span class="material-symbols-outlined">call</span>
+                <?= htmlspecialchars($s['telephone']) ?>
+              </a>
+            <?php endif; ?>
+            <?php if (!empty($s['horaires'])): ?>
+              <span class="salle-chip salle-chip--hours">
+                <span class="material-symbols-outlined">schedule</span>
+                <?= htmlspecialchars($s['horaires']) ?>
+              </span>
+            <?php endif; ?>
+          </div>
 
-  </section>
+          <a href="/salles/show?id=<?= (int)$s['id'] ?>" class="salle-card__btn">
+            Voir les détails
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+
+        </article>
+      <?php endforeach; ?>
+    </div>
+
+  <?php elseif (!empty($ville)): ?>
+
+    <div class="salle-empty">
+      <span class="material-symbols-outlined">search_off</span>
+      <p>Aucune salle trouvée pour "<strong><?= htmlspecialchars($ville) ?></strong>".</p>
+      <p class="salle-empty__sub">Essayez une autre ville ou vérifiez l'orthographe.</p>
+    </div>
+
+  <?php else: ?>
+
+    <div class="salle-empty">
+      <span class="material-symbols-outlined">location_city</span>
+      <p>Entrez le nom d'une ville pour trouver une salle FitWings.</p>
+      <p class="salle-empty__sub">Nous sommes présents à Paris, Lyon, Marseille et plus encore.</p>
+    </div>
+
+  <?php endif; ?>
 
 </main>
 

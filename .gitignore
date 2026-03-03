@@ -2,3 +2,6 @@ vendor/
 .env
 storage/logs/
 *.log
+.idea/
+.DS_Store
+Thumbs.db

@@ -54,8 +54,35 @@ if ($uri === '/programmes/show' && isset($_GET['id'])) {
     exit;
 }
 
+// Route : /salles — liste des salles par ville
+if ($uri === '/salles') {
+    $salles = [];
+    $ville = htmlspecialchars(trim($_GET['ville'] ?? ''));
+    if ($ville !== '') {
+        try {
+            $db = \App\Core\Database::getInstance()->getConnection();
+            $stmt = $db->prepare("SELECT * FROM salle WHERE ville LIKE :ville ORDER BY nom");
+            $stmt->execute(['ville' => '%' . $ville . '%']);
+            $salles = $stmt->fetchAll();
+        } catch (\Exception $e) {
+            $salles = [];
+        }
+    }
+    require __DIR__ . '/../src/Views/salles/index.php';
+    exit;
+}
+
 // Route dynamique : /salles/show?id=X
 if ($uri === '/salles/show' && isset($_GET['id'])) {
+    $salle = null;
+    try {
+        $db = \App\Core\Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM salle WHERE id = :id");
+        $stmt->execute(['id' => (int)$_GET['id']]);
+        $salle = $stmt->fetch();
+    } catch (\Exception $e) {
+        $salle = null;
+    }
     require __DIR__ . '/../src/Views/salles/show.php';
     exit;
 }

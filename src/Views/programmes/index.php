@@ -57,53 +57,20 @@ require_once __DIR__ . '/../templates/header.php';
     </form>
   </section>
 
-  <!-- Grille de programmes -->
   <section class="prog-grid">
-    <h2>Programmes disponibles</h2>
     <div class="cards-grid">
-
-      <div class="programme-card" data-category="perte-de-poids cardio debutant">
-        <h3>🔥 Brûleur Débutant</h3>
-        <p>Programme cardio doux pour débuter en douceur et perdre du poids progressivement.</p>
-        <span class="badge niveau-debutant">Débutant</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
-      <div class="programme-card" data-category="force intermediaire">
-        <h3>💪 Force Intermédiaire</h3>
-        <p>Développez votre force avec un programme Full Body structuré 3 fois par semaine.</p>
-        <span class="badge niveau-intermediaire">Intermédiaire</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
-      <div class="programme-card" data-category="perte-de-poids cardio avance">
-        <h3>⚡ HIIT Intense</h3>
-        <p>Séances courtes et explosives pour brûler un maximum de calories en peu de temps.</p>
-        <span class="badge niveau-avance">Avancé</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
-      <div class="programme-card" data-category="force avance">
-        <h3>🏋️ Split Push/Pull/Legs</h3>
-        <p>Programme avancé 5 jours par semaine pour maximiser la prise de masse musculaire.</p>
-        <span class="badge niveau-avance">Avancé</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
-      <div class="programme-card" data-category="bienetre debutant intermediaire">
-        <h3>🧘 Yoga & Bien-être</h3>
-        <p>Retrouvez l'équilibre corps-esprit avec nos séances de yoga et mobilité guidées.</p>
-        <span class="badge niveau-debutant">Débutant</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
-      <div class="programme-card" data-category="cardio intermediaire">
-        <h3>🚴 Endurance Vélo</h3>
-        <p>Améliorez votre cardio et sculputez vos jambes avec nos séances de biking collectif.</p>
-        <span class="badge niveau-intermediaire">Intermédiaire</span>
-        <a href="#" class="prog-btn">👀 Voir détail</a>
-      </div>
-
+      <?php foreach ($programmes as $programme) : ?>
+        <?php
+          $niveau = strtolower($programme['niveau']);
+          $objectif = strtolower($programme['objectif']);
+        ?>
+        <div class="programme-card" data-category="<?= htmlspecialchars($objectif) ?> <?= htmlspecialchars($niveau) ?>">
+          <h3><?= htmlspecialchars($programme['title']) ?></h3>
+          <p><?= htmlspecialchars($programme['description']) ?></p>
+          <span class="badge niveau-<?= htmlspecialchars($niveau) ?>"><?= htmlspecialchars($programme['niveau']) ?></span>
+          <a href="/programmes/show?id=<?= $programme['id'] ?>" class="prog-btn">Voir détail</a>
+        </div>
+      <?php endforeach; ?>
     </div>
     <div id="no-results" style="display:none;">Aucun programme correspondant.</div>
   </section>

@@ -34,13 +34,8 @@ Router::get('/', function () {
 });
 
 // Programmes
-Router::get('/programmes', function () {
-    require __DIR__ . '/../src/Views/programmes/index.php';
-});
-Router::get('/programmes/show', function () {
-    require __DIR__ . '/../src/Views/programmes/show.php';
-});
-
+Router::get('/programmes', 'ProgrammeController@index');
+Router::get('/programmes/show', 'ProgrammeController@show');
 
 // Prestations
 Router::get('/pages/cardio', function () {

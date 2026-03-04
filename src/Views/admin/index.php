@@ -1,15 +1,14 @@
 <?php
 $pageTitle = 'Fitwings – Administration';
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user'])) {
     header('Location: /login'); exit;
 }
-if ($_SESSION['role'] !== 'admin') {
+if ($_SESSION['user']['role'] !== 'admin') {
     header('Location: /'); exit;
 }
 
-require_once __DIR__ . '/../../templates/header.php';
+require_once __DIR__ . '/../templates/header.php';
 // TODO: $users = User::findAll(); depuis le Model
 $users_demo = [
     ['id' => 1, 'username' => 'admin',   'email' => 'admin@fitwings.fr',   'role' => 'admin',      'created_at' => '2025-01-01'],
@@ -48,7 +47,7 @@ $users_demo = [
                 </select>
                 <button type="submit" class="prog-btn" style="padding:4px 10px;margin:0;">Changer</button>
               </form>
-              <?php if ($u['id'] !== $_SESSION['user_id']): ?>
+              <?php if ($u['id'] !== $_SESSION['user']['id']): ?>
               <form method="POST" action="" style="display:inline;margin-left:8px;">
                 <input type="hidden" name="delete_id" value="<?= $u['id'] ?>">
                 <button type="submit" style="background:#e74c3c;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;">Supprimer</button>
@@ -63,4 +62,4 @@ $users_demo = [
   </section>
 </main>
 
-<?php require_once __DIR__ . '/../../templates/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

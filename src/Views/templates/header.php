@@ -1,10 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,6 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
+
 <body>
 
   <header class="header">
@@ -20,33 +22,42 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <nav id="nav-menu">
       <ul>
-        <li><a href="/">Accueil</a></li>
+  <li><a href="/">Accueil</a></li>
 
-        <li class="dropdown">
-          <a href="#">Prestations ▾</a>
-          <ul class="dropdown-menu">
-            <li><a href="/programmes">Programmes</a></li>
-            <li><a href="/pages/musculation">Musculation</a></li>
-            <li><a href="/pages/cardio">Cardio</a></li>
-            <li><a href="/pages/cours">Cours collectifs</a></li>
-            <li><a href="/pages/coaching">Coachs</a></li>
-          </ul>
-        </li>
+  <li class="dropdown">
+    <a href="#">Prestations ▾</a>
+    <ul class="dropdown-menu">
+      <li><a href="/programmes">Programmes</a></li>
+      <li><a href="/pages/musculation">Musculation</a></li>
+      <li><a href="/pages/cardio">Cardio</a></li>
+      <li><a href="/pages/cours">Cours collectifs</a></li>
+      <li><a href="/pages/coaching">Coachs</a></li>
+    </ul>
+  </li>
 
-        <li><a href="/temoignages">Témoignages</a></li>
-        <li><a href="/carriere">Carrière</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
+  <li><a href="/temoignages">Témoignages</a></li>
+  <li><a href="/carriere">Carrière</a></li>
+  <li><a href="/pages/contact">Contact</a></li>
 
-        <?php if (isset($_SESSION['user_id'])): ?>
-          <li><a href="/account">👤 <?= htmlspecialchars($_SESSION['username']) ?></a></li>
-          <?php if ($_SESSION['role'] === 'admin'): ?>
-            <li><a href="/admin">⚙️ Admin</a></li>
-          <?php endif; ?>
-          <li><a href="/logout">🚪 Déconnexion</a></li>
-        <?php else: ?>
-          <li><a href="/login">Se connecter</a></li>
-          <li><a href="/register">S'inscrire</a></li>
-        <?php endif; ?>
+  <?php if (isset($_SESSION['user'])): ?>
+
+    <li>
+      <a href="/account">
+        👤 <?= htmlspecialchars($_SESSION['user']['username']) ?>
+      </a>
+    </li>
+
+    <li>
+      <a href="/logout">🚪 Déconnexion</a>
+    </li>
+
+  <?php else: ?>
+
+    <li><a href="/login">Se connecter</a></li>
+    <li><a href="/register">S'inscrire</a></li>
+
+  <?php endif; ?>
+
       </ul>
     </nav>
 
@@ -60,7 +71,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
   <script src="/assets/js/navbar.js" defer></script>
   <script>
-    (function(){
+    (function() {
       const toggle = document.getElementById('dark-toggle');
       if (!toggle) return;
       const saved = localStorage.getItem('fitwings_theme');

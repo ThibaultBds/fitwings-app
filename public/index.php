@@ -1,11 +1,116 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/') ?: '/';
+
+// LOGIN POST
+
+if ($uri === '/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($email === '' || $password === '') {
+        $error = "Toues les champs sont obligatoires.";
+        require __DIR__ . '/../src/Views/auth/login.php';
+        exit;
+    }
+
+    try {
+        $db = \App\Core\Database::getInstance()->getConnection();
+
+        $stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+        $stmt->execute(['email' => $email]);
+
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+
+            $_SESSION['user'] = [
+    'id' => $user['id'],
+    'username' => $user['username'],
+    'email' => $user['email'],
+    'role' => $user['role'] ?? 'user'
+];
+
+            header('Location: /account');
+            exit;
+        }
+
+        $error = "Identifiants invalides.";
+        require __DIR__ . '/../src/Views/auth/login.php';
+        exit;
+    } catch (Exception $e) {
+        $error = "Erreur serveur.";
+        require __DIR__ . '/../src/Views/auth/login.php';
+        exit;
+    }
+}
+
+// REGISTER POST
+
+if ($uri === '/register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($username === '' || $email === '' || $password === '') {
+        $error = "Tous les champs sont obligatoires.";
+        require __DIR__ . '/../src/Views/auth/register.php';
+        exit;
+    }
+
+    try {
+        $db = \App\Core\Database::getInstance()->getConnection();
+
+        // Vérifier email déjà utilisé
+        $stmt = $db->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
+        $stmt->execute(['email' => $email]);
+
+        if ($stmt->fetch()) {
+            $error = "Email déjà utilisé.";
+            require __DIR__ . '/../src/Views/auth/register.php';
+            exit;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $db->prepare("
+            INSERT INTO users (username, email, password, role)
+            VALUES (:username, :email, :password, 'user')
+        ");
+
+        $stmt->execute([
+            'username' => $username,
+            'email' => $email,
+            'password' => $hashedPassword
+        ]);
+
+        $userId = $db->lastInsertId();
+
+        $_SESSION['user'] = [
+    'id' => $userId,
+    'username' => $username,
+    'email' => $email,
+    'role' => 'user'
+];
+
+        header('Location: /account');
+        exit;
+
+    } catch (Exception $e) {
+        $error = "Erreur serveur.";
+        require __DIR__ . '/../src/Views/auth/register.php';
+        exit;
+    }
+}
 
 $routes = [
     '/'                    => __DIR__ . '/../src/Views/home/index.php',
@@ -84,6 +189,22 @@ if ($uri === '/salles/show' && isset($_GET['id'])) {
         $salle = null;
     }
     require __DIR__ . '/../src/Views/salles/show.php';
+    exit;
+}
+
+if ($uri === '/logout') {
+    session_destroy();
+    header('Location: /');
+    exit;
+}
+
+if ($uri === '/account') {
+    if (!isset($_SESSION['user'])) {
+        header('Location: /login');
+        exit;
+    }
+
+    require __DIR__ . '/../src/Views/auth/account.php';
     exit;
 }
 

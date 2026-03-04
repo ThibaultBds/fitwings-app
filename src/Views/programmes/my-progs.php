@@ -6,7 +6,7 @@ require_once __DIR__ . '/../templates/header.php';
 <main class="container">
   <section class="card">
     <h2>📋 Mes programmes</h2>
-    <?php if (!isset($_SESSION['user_id'])): ?>
+    <?php if (!isset($_SESSION['user'])): ?>
       <p>Vous devez être connecté pour accéder à vos programmes.</p>
       <a href="/login" class="prog-btn">Se connecter</a>
     <?php else: ?>

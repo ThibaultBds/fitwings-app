@@ -1,18 +1,16 @@
 <?php
 $pageTitle = 'Fitwings – Mon compte';
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /login'); exit;
+if (!isset($_SESSION['user'])) {
+    header('Location: /login');
+    exit;
 }
-
 require_once __DIR__ . '/../templates/header.php';
-// TODO: $user = User::findById($_SESSION['user_id']); depuis le Model
 $user = [
-    'username'   => $_SESSION['username'] ?? 'Utilisateur',
-    'email'      => $_SESSION['email'] ?? '',
-    'role'       => $_SESSION['role'] ?? 'user',
-    'created_at' => $_SESSION['created_at'] ?? date('Y-m-d'),
+    'username'   => $_SESSION['user']['username'] ?? 'Utilisateur',
+    'email'      => $_SESSION['user']['email'] ?? '',
+    'role'       => $_SESSION['user']['role'] ?? 'user',
+    'created_at' => $_SESSION['user']['created_at'] ?? date('Y-m-d'),
 ];
 ?>
 
@@ -35,7 +33,7 @@ $user = [
       $plan = $user['plan'] ?? null;
       $membre_depuis = date('m/y', strtotime($user['created_at']));
       $expire = date('m/y', strtotime($user['created_at'] . ' +1 year'));
-      $numero = 'FW-' . str_pad($_SESSION['user_id'] ?? 0, 6, '0', STR_PAD_LEFT);
+      $numero = 'FW-' . str_pad($_SESSION['user']['id'] ?? 0, 6, '0', STR_PAD_LEFT);
     ?>
     <div style="margin-top:28px;">
       <h2 style="margin-bottom:12px;font-size:1rem;opacity:.7;">Carte abonné</h2>

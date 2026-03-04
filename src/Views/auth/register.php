@@ -9,14 +9,14 @@ require_once __DIR__ . '/../templates/header.php';
     <h1>Créer un compte</h1>
     <p>Rejoignez la communauté Fitwings</p>
 
-    <?php if (!empty($erreur)): ?>
-      <div class="form-error" style="margin-bottom:16px;">⚠️ <?= htmlspecialchars($erreur) ?></div>
-    <?php endif; ?>
+    <?php if (!empty($error)): ?>
+  <div class="form-error" style="margin-bottom:16px;">⚠️ <?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
     <?php if (!empty($success)): ?>
       <div class="form-success" style="margin-bottom:16px;">✅ <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <form method="post" action="" class="auth-form">
+    <form method="post" action="/register" class="auth-form">
       <div class="auth-field">
         <label for="username">Nom d'utilisateur</label>
         <input type="text" name="username" id="username" required placeholder="Pseudo">

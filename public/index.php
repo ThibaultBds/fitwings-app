@@ -80,34 +80,7 @@ Router::get('/pages/terms', function () {
 });
 
 // Salles
-Router::get('/salles', function () {
-    $salles = [];
-    $ville = htmlspecialchars(trim($_GET['ville'] ?? ''));
-    if ($ville !== '') {
-        try {
-            $db = \App\Core\Database::getInstance()->getConnection();
-            $stmt = $db->prepare("SELECT * FROM salle WHERE ville LIKE :ville ORDER BY nom");
-            $stmt->execute(['ville' => '%' . $ville . '%']);
-            $salles = $stmt->fetchAll();
-        } catch (\Exception $e) {
-            $salles = [];
-        }
-    }
-    require __DIR__ . '/../src/Views/salles/index.php';
-});
-Router::get('/salles/show', function () {
-    $salle = null;
-    try {
-        $db = \App\Core\Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM salle WHERE id = :id");
-        $stmt->execute(['id' => (int)($_GET['id'] ?? 0)]);
-        $salle = $stmt->fetch();
-    } catch (\Exception $e) {
-        $salle = null;
-    }
-    require __DIR__ . '/../src/Views/salles/show.php';
-});
-
-
+Router::get('/salles', 'SalleController@index');
+Router::get('/salles/show', 'SalleController@show');
 // Dispatch
 Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

@@ -89,6 +89,11 @@ class Router
 
                 array_shift($matches);
 
+                foreach ($route['middleware'] as $middleware) {
+                    $middlewareClass = "App\\Middleware\\$middleware";
+                    (new $middlewareClass())->handle();
+                }
+
                 // Si c’est une fonction anonyme
                 if (is_callable($route['action'])) {
                     return call_user_func_array($route['action'], $matches);

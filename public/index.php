@@ -15,13 +15,17 @@ Router::get('/register', 'AuthController@register');
 Router::post('/register', 'AuthController@register');
 Router::get('/logout', 'AuthController@logout');
 
-// Compte
-Router::get('/account', function () {
-    if (!isset($_SESSION['user'])) {
-        header('Location: /login');
-        exit;
-    }
-    require __DIR__ . '/../src/Views/auth/account.php';
+// Compte (protégé)
+Router::group(['middleware' => 'AuthMiddleware'], function () {
+    Router::get('/account', function () {
+        require __DIR__ . '/../src/Views/auth/account.php';
+    });
+    Router::get('/mes-programmes', function() {
+        require __DIR__ . '/../src/Views/programmes/my-progs.php';
+    });
+    Router::get('/admin', function() {
+        require __DIR__ . '/../src/Views/admin/index.php';
+    });
 });
 
 // Home
@@ -36,9 +40,7 @@ Router::get('/programmes', function () {
 Router::get('/programmes/show', function () {
     require __DIR__ . '/../src/Views/programmes/show.php';
 });
-Router::get('/mes-programmes', function () {
-    require __DIR__ . '/../src/Views/programmes/my-progs.php';
-});
+
 
 // Prestations
 Router::get('/pages/cardio', function () {
@@ -111,13 +113,6 @@ Router::get('/salles/show', function () {
     require __DIR__ . '/../src/Views/salles/show.php';
 });
 
-// Admin & modération
-Router::get('/admin', function () {
-    require __DIR__ . '/../src/Views/admin/index.php';
-});
-Router::get('/moderator', function () {
-    require __DIR__ . '/../src/Views/moderator/index.php';
-});
 
 // Dispatch
 Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

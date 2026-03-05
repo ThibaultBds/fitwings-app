@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ProgrammeModel;
 
-Class ProgrammeController extends BaseController {
+class ProgrammeController extends BaseController {
     private $programmeModel;
 
     public function __construct() {

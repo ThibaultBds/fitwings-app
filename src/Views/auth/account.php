@@ -105,8 +105,54 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
     <?php endif; ?>
 
+    <?php if (!empty($progressions)) : ?>
+    <div class="card account-section">
+      <h2>Courbe de progression</h2>
+      <canvas id="progressionChart"></canvas>
+    </div>
+    <?php endif; ?>
+
   </section>
 
 </main>
+
+<?php if (!empty($progressions)) : ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = <?= json_encode(array_map(fn($p) => date('d/m', strtotime($p['date_suivi'])), array_reverse($progressions))) ?>;
+  const poids  = <?= json_encode(array_map(fn($p) => (float)$p['poids'], array_reverse($progressions))) ?>;
+  const taille = <?= json_encode(array_map(fn($p) => (float)$p['tour_taille'], array_reverse($progressions))) ?>;
+
+  new Chart(document.getElementById('progressionChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Poids (kg)',
+          data: poids,
+          borderColor: '#e8a020',
+          backgroundColor: 'rgba(232,160,32,0.1)',
+          tension: 0.3,
+          fill: true,
+        },
+        {
+          label: 'Tour de taille (cm)',
+          data: taille,
+          borderColor: '#4fa3e0',
+          backgroundColor: 'rgba(79,163,224,0.1)',
+          tension: 0.3,
+          fill: true,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'top' } },
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+</script>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

@@ -19,9 +19,7 @@ Router::get('/logout', 'AuthController@logout');
 Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::get('/account', 'AccountController@index');
     Router::post('/account/progression', 'AccountController@saveProgression');
-    Router::get('/mes-programmes', function() {
-        require __DIR__ . '/../src/Views/programmes/my-progs.php';
-    });
+    Router::get('/mes-programmes', 'MesProgrammesController@index');
     Router::get('/admin', function() {
         require __DIR__ . '/../src/Views/admin/index.php';
     });

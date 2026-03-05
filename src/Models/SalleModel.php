@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\BaseModel;
 
-Class SalleModel extends BaseModel {
+class SalleModel extends BaseModel {
     public function findById (int $id) {
         $stmt = $this->db->prepare("SELECT * FROM salle WHERE id = :id");
         $stmt->execute(['id' => $id]);

@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\BaseModel;
 
 
-Class ProgrammeModel extends BaseModel {
+class ProgrammeModel extends BaseModel {
     public function getAll() {
         $stmt = $this->db->prepare("SELECT * FROM programme");
         $stmt->execute();

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-Class ProgressionModel extends BaseModel {
+class ProgressionModel extends BaseModel {
     public function getByUserId(int $userId) {
         $stmt = $this->db->prepare("SELECT * FROM progression WHERE user_id = :user_id ORDER BY date_suivi DESC");
         $stmt->execute(['user_id' => $userId]);

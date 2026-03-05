@@ -19,11 +19,11 @@ require_once __DIR__ . '/../templates/header.php';
 
     <!-- Carte abonné -->
     <?php
-      // TODO: récupérer le vrai plan depuis la BDD (ex: $user['plan'] = 'Premium')
-      $plan = $user['plan'] ?? null;
-      $membre_depuis = date('m/y', strtotime($user['created_at']));
-      $expire = date('m/y', strtotime($user['created_at'] . ' +1 year'));
-      $numero = 'FW-' . str_pad($_SESSION['user']['id'] ?? 0, 6, '0', STR_PAD_LEFT);
+    // TODO: récupérer le vrai plan depuis la BDD (ex: $user['plan'] = 'Premium')
+    $plan = $user['plan'] ?? null;
+    $membre_depuis = date('m/y', strtotime($user['created_at']));
+    $expire = date('m/y', strtotime($user['created_at'] . ' +1 year'));
+    $numero = 'FW-' . str_pad($_SESSION['user']['id'] ?? 0, 6, '0', STR_PAD_LEFT);
     ?>
     <div style="margin-top:28px;">
       <h2 style="margin-bottom:12px;font-size:1rem;opacity:.7;">Carte abonné</h2>
@@ -60,13 +60,43 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
 
     <?php if (in_array($user['role'], ['admin', 'moderateur'])): ?>
-    <div style="margin-top:20px;">
-      <?php if ($user['role'] === 'admin'): ?>
-        <a href="/admin" class="btn-primary">⚙️ Panneau Admin</a>
-      <?php else: ?>
-        <a href="/moderator" class="btn-primary">🛡️ Espace Modération</a>
-      <?php endif; ?>
+      <div style="margin-top:20px;">
+        <?php if ($user['role'] === 'admin'): ?>
+          <a href="/admin" class="btn-primary">⚙️ Panneau Admin</a>
+        <?php else: ?>
+          <a href="/moderator" class="btn-primary">🛡️ Espace Modération</a>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+    <div class="progression-form">
+      <h2>📊 Ajouter une entrée de suivi</h2>
+      <form method="post" action="/account/progression">
+        <label>Poids (kg) <input type="number" step="0.1" name="poids" required></label>
+        <label>Tour de taille (cm) <input type="number" step="0.1" name="tour_taille" required></label>
+        <label>Nombre de séances <input type="number" name="nombre_seances" required></label>
+        <button type="submit" class="prog-btn">Enregistrer</button>
+      </form>
     </div>
+    <?php if (!empty($progressions)) : ?>
+      <div style="margin-top:24px;text-align:left;">
+        <h2>📈 Historique de suivi</h2>
+        <table class="progression-table">
+          <tr>
+            <th>Date</th>
+            <th>Poids</th>
+            <th>Tour de taille</th>
+            <th>Séances</th>
+          </tr>
+          <?php foreach ($progressions as $p) : ?>
+            <tr>
+              <td><?= $p['date_suivi'] ?></td>
+              <td><?= $p['poids'] ?> kg</td>
+              <td><?= $p['tour_taille'] ?> cm</td>
+              <td><?= $p['nombre_seances'] ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </table>
+      </div>
     <?php endif; ?>
   </section>
 </main>

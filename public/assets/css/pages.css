@@ -366,6 +366,54 @@
 }
 .membre-card-no-plan a:hover { text-decoration: underline; }
 
+/* ─── Suivi progression (account) ─── */
+
+.progression-form {
+  margin-top: 32px;
+  text-align: left;
+}
+.progression-form h2 {
+  margin-bottom: 16px;
+}
+.progression-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  font-size: .9rem;
+  color: var(--text-muted, #aaa);
+}
+.progression-form input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.progression-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: .9rem;
+}
+.progression-table th {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  opacity: .6;
+  font-weight: 600;
+}
+.progression-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.progression-table tr:hover td {
+  background: rgba(255,255,255,0.04);
+}
+
 /* ─── Hero ─── */
 .hero {
   position: relative;

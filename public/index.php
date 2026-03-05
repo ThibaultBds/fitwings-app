@@ -18,6 +18,7 @@ Router::get('/logout', 'AuthController@logout');
 // Compte (protégé)
 Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::get('/account', 'AccountController@index');
+    Router::post('/account/progression', 'AccountController@saveProgression');
     Router::get('/mes-programmes', function() {
         require __DIR__ . '/../src/Views/programmes/my-progs.php';
     });

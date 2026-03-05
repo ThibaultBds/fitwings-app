@@ -1,17 +1,7 @@
 <?php
 $pageTitle = 'Fitwings – Mon compte';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /login');
-    exit;
-}
 require_once __DIR__ . '/../templates/header.php';
-$user = [
-    'username'   => $_SESSION['user']['username'] ?? 'Utilisateur',
-    'email'      => $_SESSION['user']['email'] ?? '',
-    'role'       => $_SESSION['user']['role'] ?? 'user',
-    'created_at' => $_SESSION['user']['created_at'] ?? date('Y-m-d'),
-];
 ?>
 
 <main class="container">

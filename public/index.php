@@ -17,9 +17,7 @@ Router::get('/logout', 'AuthController@logout');
 
 // Compte (protégé)
 Router::group(['middleware' => 'AuthMiddleware'], function () {
-    Router::get('/account', function () {
-        require __DIR__ . '/../src/Views/auth/account.php';
-    });
+    Router::get('/account', 'AccountController@index');
     Router::get('/mes-programmes', function() {
         require __DIR__ . '/../src/Views/programmes/my-progs.php';
     });
@@ -82,5 +80,6 @@ Router::get('/pages/terms', function () {
 // Salles
 Router::get('/salles', 'SalleController@index');
 Router::get('/salles/show', 'SalleController@show');
+
 // Dispatch
 Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

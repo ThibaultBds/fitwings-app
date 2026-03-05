@@ -366,10 +366,115 @@
 }
 .membre-card-no-plan a:hover { text-decoration: underline; }
 
+/* ─── Dashboard compte ─── */
+
+.account-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.account-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.account-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-username {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.account-info-block {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 8px;
+}
+.account-info-block p {
+  display: flex;
+  justify-content: space-between;
+  font-size: .88rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin: 0;
+}
+.account-info-block p:last-child { border-bottom: none; }
+.account-info-block span { opacity: .5; }
+
+.account-card-label {
+  font-size: .8rem;
+  opacity: .5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+.account-actions a { text-align: center; }
+
+.btn-danger {
+  display: inline-block;
+  padding: 10px 22px;
+  background: #e74c3c;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.account-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.account-section h2 {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.progression-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .account-layout { grid-template-columns: 1fr; }
+  .progression-fields { grid-template-columns: 1fr; }
+}
+
 /* ─── Suivi progression (account) ─── */
 
 .progression-form {
-  margin-top: 32px;
   text-align: left;
 }
 .progression-form h2 {

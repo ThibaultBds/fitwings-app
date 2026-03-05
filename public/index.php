@@ -20,6 +20,7 @@ Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::get('/account', 'AccountController@index');
     Router::post('/account/progression', 'AccountController@saveProgression');
     Router::get('/mes-programmes', 'MesProgrammesController@index');
+    Router::post('/programmes/inscrire', 'ProgrammeController@inscrire');
     Router::get('/admin', function() {
         require __DIR__ . '/../src/Views/admin/index.php';
     });

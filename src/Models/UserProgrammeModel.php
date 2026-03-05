@@ -15,6 +15,16 @@ class UserProgrammeModel extends BaseModel {
         return $stmt->fetchAll();
     }
 
+    public function isEnrolled(int $userId, int $programmeId): bool
+    {
+        $stmt = $this->db->prepare("
+            SELECT COUNT(*) FROM programme_utilisateur
+            WHERE user_id = :user_id AND programme_id = :programme_id
+        ");
+        $stmt->execute(['user_id' => $userId, 'programme_id' => $programmeId]);
+        return (bool) $stmt->fetchColumn();
+    }
+
     public function add(int $userId, int $programmeId)
     {
         $stmt = $this->db->prepare("
@@ -24,3 +34,4 @@ class UserProgrammeModel extends BaseModel {
         $stmt->execute(['user_id' => $userId, 'programme_id' => $programmeId]);
     }
 }
+

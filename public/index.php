@@ -61,9 +61,8 @@ Router::get('/abonnements', function () {
 Router::get('/pages/contact', function () {
     require __DIR__ . '/../src/Views/pages/contact.php';
 });
-Router::get('/carriere', function () {
-    require __DIR__ . '/../src/Views/pages/carriere.php';
-});
+Router::get('/carriere', 'CarriereController@index');
+Router::post('/carriere', 'CarriereController@index');
 Router::get('/temoignages', function () {
     require __DIR__ . '/../src/Views/pages/temoignages.php';
 });

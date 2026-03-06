@@ -1,22 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Carrière';
 require_once __DIR__ . '/../templates/header.php';
-
-$success = false;
-$erreur  = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom     = htmlspecialchars(trim($_POST['nom'] ?? ''));
-    $email   = htmlspecialchars(trim($_POST['email'] ?? ''));
-    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
-
-    if ($nom && $email && $message) {
-        // TODO: stocker en BDD (table candidatures) + upload CV
-        $success = true;
-    } else {
-        $erreur = "Tous les champs obligatoires doivent être remplis.";
-    }
-}
 ?>
 
 <main class="carriere-main">

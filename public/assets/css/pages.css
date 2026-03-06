@@ -468,8 +468,20 @@
 }
 
 @media (max-width: 768px) {
-  .account-layout { grid-template-columns: 1fr; }
+  .account-layout { grid-template-columns: 1fr; padding: 24px 16px; }
   .progression-fields { grid-template-columns: 1fr; }
+  .card { padding: 20px 16px; }
+  .container { margin: 24px auto; }
+  .section-title { font-size: 1.5rem; margin: 32px 0 20px; }
+}
+
+@media (max-width: 480px) {
+  .card { padding: 16px 12px; }
+  .account-layout { padding: 16px 12px; }
+  .section-title { font-size: 1.25rem; }
+  .hero-sub { font-size: 1rem; }
+  .admin-table { font-size: 0.8rem; }
+  .admin-table th, .admin-table td { padding: 8px 8px; }
 }
 
 /* ─── Suivi progression (account) ─── */

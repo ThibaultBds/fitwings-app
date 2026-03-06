@@ -1,20 +1,6 @@
 <?php
 $pageTitle = 'Fitwings – Administration';
-
-if (!isset($_SESSION['user'])) {
-    header('Location: /login'); exit;
-}
-if ($_SESSION['user']['role'] !== 'admin') {
-    header('Location: /'); exit;
-}
-
 require_once __DIR__ . '/../templates/header.php';
-// TODO: $users = User::findAll(); depuis le Model
-$users_demo = [
-    ['id' => 1, 'username' => 'admin',   'email' => 'admin@fitwings.fr',   'role' => 'admin',      'created_at' => '2025-01-01'],
-    ['id' => 2, 'username' => 'jean',    'email' => 'jean@mail.fr',         'role' => 'user',       'created_at' => '2025-02-10'],
-    ['id' => 3, 'username' => 'modo1',   'email' => 'modo@fitwings.fr',     'role' => 'moderateur', 'created_at' => '2025-03-05'],
-];
 ?>
 
 <main class="container">
@@ -30,7 +16,7 @@ $users_demo = [
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($users_demo as $u): ?>
+          <?php foreach ($users as $u): ?>
           <tr>
             <td><?= $u['id'] ?></td>
             <td><?= htmlspecialchars($u['username']) ?></td>
@@ -59,6 +45,31 @@ $users_demo = [
         </tbody>
       </table>
     </div>
+  </section>
+
+  <section class="card" style="margin-top:32px;">
+    <h2>Témoignages en attente</h2>
+    <?php if (empty($temoignages_attente)): ?>
+      <p style="color:#aaa;">Aucun témoignage en attente.</p>
+    <?php else: ?>
+      <?php foreach ($temoignages_attente as $t): ?>
+        <div style="border:1px solid var(--primary);border-radius:8px;padding:16px;margin-bottom:16px;">
+          <strong><?= htmlspecialchars($t['username']) ?></strong>
+          <span style="margin-left:12px;"><?= str_repeat('⭐', (int)$t['note']) ?></span>
+          <p><?= htmlspecialchars($t['contenu']) ?></p>
+          <form method="POST" action="/admin/moderer" style="display:inline;">
+            <input type="hidden" name="id" value="<?= $t['id'] ?>">
+            <input type="hidden" name="statut" value="approuve">
+            <button type="submit" class="prog-btn" style="padding:4px 12px;">Approuver</button>
+          </form>
+          <form method="POST" action="/admin/moderer" style="display:inline;margin-left:8px;">
+            <input type="hidden" name="id" value="<?= $t['id'] ?>">
+            <input type="hidden" name="statut" value="refuse">
+            <button type="submit" style="background:#e74c3c;color:#fff;border:none;padding:4px 12px;border-radius:6px;cursor:pointer;">Refuser</button>
+          </form>
+        </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
   </section>
 </main>
 

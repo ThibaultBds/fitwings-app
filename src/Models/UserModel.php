@@ -24,6 +24,12 @@ class UserModel extends BaseModel {
 
         return $this->db->lastInsertId();
     }
+
+    public function findAll() {
+    $stmt = $this->db->prepare("SELECT id, username, email, role, created_at FROM users ORDER BY id ASC");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
 }
 
     

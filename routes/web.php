@@ -41,4 +41,6 @@ return [
     // Admin & modération
     '/admin'               => __DIR__ . '/../src/Views/admin/index.php',
     '/moderator'           => __DIR__ . '/../src/Views/moderator/index.php',
+
+
 ];

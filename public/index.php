@@ -21,9 +21,8 @@ Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::post('/account/progression', 'AccountController@saveProgression');
     Router::get('/mes-programmes', 'MesProgrammesController@index');
     Router::post('/programmes/inscrire', 'ProgrammeController@inscrire');
-    Router::get('/admin', function() {
-        require __DIR__ . '/../src/Views/admin/index.php';
-    });
+    Router::get('/admin', 'AdminController@index');
+    Router::post('/admin/moderer', 'AdminController@modererTemoignage');
 });
 
 // Home
@@ -63,9 +62,8 @@ Router::get('/pages/contact', function () {
 });
 Router::get('/carriere', 'CarriereController@index');
 Router::post('/carriere', 'CarriereController@index');
-Router::get('/temoignages', function () {
-    require __DIR__ . '/../src/Views/pages/temoignages.php';
-});
+Router::get('/temoignages', 'TemoignageController@index');
+Router::post('/temoignages', 'TemoignageController@index');
 Router::get('/pages/legal', function () {
     require __DIR__ . '/../src/Views/pages/legal.php';
 });
@@ -79,6 +77,7 @@ Router::get('/pages/terms', function () {
 // Salles
 Router::get('/salles', 'SalleController@index');
 Router::get('/salles/show', 'SalleController@show');
+
 
 // Dispatch
 Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

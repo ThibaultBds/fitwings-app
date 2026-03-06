@@ -18,6 +18,7 @@ require_once __DIR__ . '/../templates/header.php';
       <div class="form-error">⚠️ <?= $erreur ?></div>
     <?php endif; ?>
     <form method="POST" action="" enctype="multipart/form-data" class="objectif-form">
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
       <label for="nom">Votre nom</label>
       <input type="text" name="nom" id="nom" required>
       <label for="email">Votre email</label>

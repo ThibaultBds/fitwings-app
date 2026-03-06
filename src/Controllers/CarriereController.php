@@ -3,35 +3,46 @@
 namespace App\Controllers;
 
 use App\Models\CandidatureModel;
+use App\Core\Csrf;
 
 class CarriereController extends BaseController
 {
     private $candidatureModel;
+    private $csrf;
 
         public function __construct() 
         {
             $this->candidatureModel = new CandidatureModel();
+            $this->csrf = new Csrf();
         }
 
         public function index() {
-            $success = false;
-            $erreur = '';
-            
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom     = htmlspecialchars(trim($_POST['nom'] ?? ''));
-            $email   = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $success = false;
+    $erreur  = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
+            $nom       = htmlspecialchars(trim($_POST['nom'] ?? ''));
+            $email     = htmlspecialchars(trim($_POST['email'] ?? ''));
             $telephone = htmlspecialchars(trim($_POST['telephone'] ?? ''));
-            $poste = htmlspecialchars(trim($_POST['poste'] ?? ''));
-            $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+            $poste     = htmlspecialchars(trim($_POST['poste'] ?? ''));
+            $message   = htmlspecialchars(trim($_POST['message'] ?? ''));
 
             if ($nom && $email && $message) {
-                $success = true;
                 $this->candidatureModel->create($nom, $email, $telephone, $poste, $message);
+                $success = true;
             } else {
                 $erreur = "Tous les champs obligatoires doivent être remplis.";
             }
+        } else {
+            $erreur = "Token invalide.";
         }
-        $this->render('pages/carriere', ['success' => $success, 'erreur' => $erreur]);
-
     }
+
+    $this->render('pages/carriere', [
+        'success'    => $success,
+        'erreur'     => $erreur,
+        'csrf_token' => $this->csrf->generate()
+    ]);
+}
 }

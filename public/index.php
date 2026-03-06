@@ -23,6 +23,8 @@ Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::post('/programmes/inscrire', 'ProgrammeController@inscrire');
     Router::get('/admin', 'AdminController@index');
     Router::post('/admin/moderer', 'AdminController@modererTemoignage');
+    Router::post('/admin/role', 'AdminController@updateRole');
+    Router::post('/admin/delete', 'AdminController@deleteRole');
 });
 
 // Home

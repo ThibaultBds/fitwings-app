@@ -30,4 +30,19 @@ class AdminController extends BaseController
             $this->temoignageModel->updateStatut($id, $statut);
             $this->redirect('/admin');
         }
+
+        public function updateRole() {
+            $role_id = (int)($_POST['role_id'] ?? '');
+            $new_role = (string)($_POST['new_role'] ?? '');
+            $this->userModel->updateRole($role_id, $new_role);
+
+            return $this->redirect('/admin');
+        }
+
+        public function deleteRole() {
+            $delete_id = (int)($_POST['delete_id'] ?? '');
+            $this->userModel->delete($delete_id);
+
+            return $this->redirect('/admin');
+        }
 }

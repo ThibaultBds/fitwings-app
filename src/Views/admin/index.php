@@ -24,7 +24,7 @@ require_once __DIR__ . '/../templates/header.php';
             <td><span class="badge niveau-<?= $u['role'] === 'admin' ? 'avance' : ($u['role'] === 'moderateur' ? 'intermediaire' : 'debutant') ?>"><?= $u['role'] ?></span></td>
             <td><?= $u['created_at'] ?></td>
             <td>
-              <form method="POST" action="" style="display:inline;">
+              <form method="POST" action="/admin/role" style="display:inline;">
                 <input type="hidden" name="role_id" value="<?= $u['id'] ?>">
                 <select name="new_role" style="padding:4px 8px;border-radius:6px;background:var(--bg);color:var(--text);border:1px solid var(--primary);">
                   <option value="user" <?= $u['role']==='user'?'selected':'' ?>>user</option>
@@ -34,7 +34,7 @@ require_once __DIR__ . '/../templates/header.php';
                 <button type="submit" class="prog-btn" style="padding:4px 10px;margin:0;">Changer</button>
               </form>
               <?php if ($u['id'] !== $_SESSION['user']['id']): ?>
-              <form method="POST" action="" style="display:inline;margin-left:8px;">
+              <form method="POST" action="/admin/delete" style="display:inline;margin-left:8px;">
                 <input type="hidden" name="delete_id" value="<?= $u['id'] ?>">
                 <button type="submit" style="background:#e74c3c;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;">Supprimer</button>
               </form>

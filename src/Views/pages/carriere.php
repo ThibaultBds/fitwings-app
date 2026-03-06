@@ -22,6 +22,8 @@ require_once __DIR__ . '/../templates/header.php';
       <input type="text" name="nom" id="nom" required>
       <label for="email">Votre email</label>
       <input type="email" name="email" id="email" required>
+      <label for="telephone">Votre téléphone</label>
+      <input type="tel" name="telephone" id="telephone" required>
       <label for="message">Votre motivation</label>
       <textarea name="message" id="message" rows="5" required style="padding:10px;border-radius:8px;border:2px solid var(--primary);background:var(--bg);color:var(--text);font-size:1rem;resize:vertical;"></textarea>
       <label for="cv">CV (PDF, optionnel)</label>

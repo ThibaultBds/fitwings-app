@@ -23,10 +23,10 @@ class TemoignageController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
-                $note = htmlspecialchars(trim($_POST['note'] ?? ''));
-                $contenu = htmlspecialchars(trim($_POST['contenu']) ?? '');
+                $note = (int)($_POST['note'] ?? '');
+                $contenu = trim($_POST['contenu'] ?? '');
 
-                if ($note && $contenu) {
+                if ($note  >=1 && $note <= 5 && $contenu) {
                     $this->temoignagesModel->create($_SESSION['user']['id'], $note, $contenu);
                     $success = true;
                 } else {

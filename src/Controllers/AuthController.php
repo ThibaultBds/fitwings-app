@@ -43,7 +43,17 @@ class AuthController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = "Email invalide.";
+                $this->render('auth/register', ['error' => $error]);
+                return;
+            }
             $password = $_POST['password'] ?? '';
+            if (strlen($password) < 8) {
+                $error = "Mot de passe invalide.";
+                $this->render('auth/register', ['error' => $error]);
+                return;
+            }
 
             if($username === '' || $email === '' || $password === '') {
                 $error = "Tous les champs sont obligatoires.";
@@ -73,8 +83,9 @@ class AuthController extends BaseController
         $this->render('auth/register');
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
-            $this->redirect('/');
+        $this->redirect('/');
     }
 }

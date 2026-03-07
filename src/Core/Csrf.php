@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class CSRF {
+class Csrf {
     public function generate() {
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));

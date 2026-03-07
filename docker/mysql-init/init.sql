@@ -86,3 +86,12 @@ CREATE TABLE IF NOT EXISTS salle (
     horaires VARCHAR(255),
     description TEXT
 );
+
+CREATE TABLE IF NOT EXISTS reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cours VARCHAR(100) NOT NULL,
+    message TEXT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

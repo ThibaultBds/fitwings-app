@@ -122,6 +122,6 @@ class Router
         }
 
         http_response_code(404);
-        echo "404 Not Found";
+        require __DIR__ . '/../../src/Views/errors/404.php';
     }
 }

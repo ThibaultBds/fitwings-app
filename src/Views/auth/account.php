@@ -17,7 +17,7 @@ require_once __DIR__ . '/../templates/header.php';
   <aside class="account-sidebar">
 
     <div class="account-avatar">
-      <?= strtoupper(substr($user['username'], 0, 1)) ?>
+      <?= htmlspecialchars(strtoupper(substr($user['username'], 0, 1))) ?>
     </div>
     <h2 class="account-username"><?= htmlspecialchars($user['username']) ?></h2>
     <span class="badge niveau-debutant"><?= htmlspecialchars($user['role']) ?></span>

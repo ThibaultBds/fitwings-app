@@ -2,31 +2,51 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\ProgressionModel;
+use App\Core\Csrf;
+use App\Repositories\ProgressionRepository;
+use App\Repositories\UserRepository;
+use App\Security\Secu;
 
 class AccountController extends BaseController
 {
+    private UserRepository $userRepository;
+    private ProgressionRepository $progressionRepository;
+    private Csrf $csrf;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+        $this->progressionRepository = new ProgressionRepository();
+        $this->csrf = new Csrf();
+    }
 
     public function index()
     {
-        $userModel = new UserModel();
-        $user = $userModel->findByEmail($_SESSION['user']['email']);
+        $user = $this->userRepository->findById($_SESSION['user']['id']);
+        $progressions = $user ? $this->progressionRepository->getByUserId($user['id']) : [];
 
-        $progressionModel = new ProgressionModel();
-        $progressions = $progressionModel->getByUserId($user['id']);
-
-        $this->render('auth/account', ['user' => $user, 'progressions' => $progressions]);
+        $this->render('auth/account', [
+            'user' => $user,
+            'progressions' => $progressions,
+            'csrf_token' => $this->csrf->generate(),
+        ]);
     }
 
-    public function saveProgression() {
-        $poids = (float)($_POST['poids'] ?? 0);
-        $tourTaille = (float)($_POST['tour_taille'] ?? 0);
-        $nbSeances = (int)($_POST['nombre_seances'] ?? 0);
+    public function saveProgression()
+    {
+        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
+            $this->redirect('/account');
+        }
 
-        $progressionModel = new ProgressionModel();
-        $progressionModel->create($_SESSION['user']['id'], $poids, $tourTaille, $nbSeances);
+        $poids = Secu::getFloat($_POST, 'poids', 0);
+        $tourTaille = Secu::getFloat($_POST, 'tour_taille', 0);
+        $nbSeances = Secu::getInt($_POST, 'nombre_seances', -1);
 
+        if ($poids <= 0 || $tourTaille <= 0 || $nbSeances < 0) {
+            $this->redirect('/account');
+        }
+
+        $this->progressionRepository->create($_SESSION['user']['id'], $poids, $tourTaille, $nbSeances);
         $this->redirect('/account');
     }
 }

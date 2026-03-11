@@ -2,15 +2,23 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Repositories\UserRepository;
+use App\Security\Secu;
 
 class AuthController extends BaseController
 {
+    private UserRepository $userRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+    }
+
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email'] ?? '');
-            $password = $_POST['password'] ?? '';
+            $email = Secu::getEmail($_POST, 'email');
+            $password = (string)($_POST['password'] ?? '');
 
             if ($email === '' || $password === '') {
                 $error = "Tous les champs sont obligatoires.";
@@ -18,19 +26,20 @@ class AuthController extends BaseController
                 return;
             }
 
-            $userModel = new UserModel();
-            $user = $userModel->findByEmail($email);
+            $user = $this->userRepository->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
+                session_regenerate_id(true);
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'email' => $user['email'],
-                    'role' => $user['role'] ?? 'user'
+                    'role' => $user['role'] ?? 'user',
                 ];
 
                 $this->redirect('/account');
             }
+
             $this->render('auth/login', ['error' => 'Identifiants invalides.']);
             return;
         }
@@ -41,42 +50,41 @@ class AuthController extends BaseController
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = trim($_POST['username'] ?? '');
-            $email = trim($_POST['email'] ?? '');
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = "Email invalide.";
-                $this->render('auth/register', ['error' => $error]);
+            $username = Secu::getString($_POST, 'username', 120);
+            $email    = Secu::getEmail($_POST, 'email');
+            $password = (string) ($_POST['password'] ?? '');
+
+            if ($username === '' || $password === '') {
+                $this->render('auth/register', ['error' => 'Tous les champs sont obligatoires.']);
                 return;
             }
-            $password = $_POST['password'] ?? '';
+
+            if ($email === '') {
+                $this->render('auth/register', ['error' => 'Email invalide.']);
+                return;
+            }
+
             if (strlen($password) < 8) {
-                $error = "Mot de passe invalide.";
-                $this->render('auth/register', ['error' => $error]);
+                $this->render('auth/register', ['error' => 'Mot de passe trop court (8 caractères minimum).']);
                 return;
             }
 
-            if($username === '' || $email === '' || $password === '') {
-                $error = "Tous les champs sont obligatoires.";
-                $this->render('auth/register', ['error' => $error]);
-                return;
-            }
-
-            $userModel = new UserModel();
-
-            if ($userModel->findByEmail($email)) {
+            if ($this->userRepository->findByEmail($email)) {
                 $this->render('auth/register', ['error' => 'Email déjà utilisé.']);
                 return;
             }
-            
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $userId = $userModel->create($username, $email, $hashedPassword);
 
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $userId = $this->userRepository->create($username, $email, $hashedPassword);
+
+            session_regenerate_id(true);
             $_SESSION['user'] = [
                 'id' => $userId,
                 'username' => $username,
                 'email' => $email,
-                'role' => 'user'
+                'role' => 'user',
             ];
+
             $this->redirect('/account');
         }
 
@@ -85,6 +93,12 @@ class AuthController extends BaseController
 
     public function logout()
     {
+        $_SESSION = [];
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        }
+
         session_destroy();
         $this->redirect('/');
     }

@@ -1,16 +1,18 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
-class BaseController {
+class BaseController
+{
+    protected function render(string $view, array $data = []): void
+    {
+        extract($data, EXTR_SKIP);
+        require __DIR__ . '/../../src/Views/' . $view . '.php';
+    }
 
-protected function render(string $view, array $data = []) {
-    extract($data);
-    require __DIR__ . '/../../src/Views/' . $view . '.php';
-}
-
-protected function redirect(string $url) {
-    header('Location: ' . $url);
-    exit;
-}
+    protected function redirect(string $url): void
+    {
+        header('Location: ' . $url);
+        exit;
+    }
 }

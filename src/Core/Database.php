@@ -5,36 +5,41 @@ namespace App\Core;
 use PDO;
 use PDOException;
 
-class Database {
-    private static $instance = null;
-    private $pdo;
+class Database
+{
+    private static ?self $instance = null;
+    private PDO $pdo;
 
-    private function __construct() {
+    private function __construct()
+    {
         try {
             $host = getenv('DB_HOST') ?: 'db';
             $port = getenv('DB_PORT') ?: '3306';
-            $db = getenv ('DB_DATABASE') ?: 'fitwings';
+            $db   = getenv('DB_DATABASE') ?: 'fitwings';
             $user = getenv('DB_USERNAME') ?: 'fitwings_user';
             $pass = getenv('DB_PASSWORD') ?: 'fitwings_pass';
-            
+
             $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
 
             $this->pdo = new PDO($dsn, $user, $pass);
-
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }  catch (PDOException $e) {
-            throw new \RuntimeException("Erreur de connexion à la base de donnes : " . $e->getMessage(), 0, $e);
+        } catch (PDOException $e) {
+            throw new \RuntimeException('Erreur de connexion à la base de données : ' . $e->getMessage(), 0, $e);
         }
     }
-    public static function getInstance() {
+
+    public static function getInstance(): self
+    {
         if (self::$instance === null) {
             self::$instance = new self();
         }
+
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection(): PDO
+    {
         return $this->pdo;
     }
 }

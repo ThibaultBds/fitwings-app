@@ -68,21 +68,41 @@ const filterButtons = document.querySelectorAll(".prog-objectifs-buttons button"
 const cards = document.querySelectorAll(".programme-card");
 const noResults = document.getElementById("no-results");
 
+function applyFilter(filter) {
+  let visible = 0;
+
+  cards.forEach(card => {
+    const categories = card.getAttribute("data-category") || "";
+    const show = filter === "all" || categories.split(" ").includes(filter);
+    card.style.display = show ? "block" : "none";
+    if (show) visible++;
+  });
+
+  if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
+}
+
 filterButtons.forEach(button => {
   button.addEventListener("click", () => {
-    const filter = button.getAttribute("data-filter");
+    const filter = button.getAttribute("data-filter") || "all";
 
     filterButtons.forEach(b => b.classList.remove("active"));
     button.classList.add("active");
-
-    let visible = 0;
-    cards.forEach(card => {
-      const categories = card.getAttribute("data-category") || "";
-      const show = filter === "all" || categories.split(" ").includes(filter);
-      card.style.display = show ? "block" : "none";
-      if (show) visible++;
-    });
-
-    if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
+    applyFilter(filter);
   });
 });
+
+// Active automatiquement un filtre depuis l'URL, ex: /programmes?objectif=cardio
+if (filterButtons.length > 0) {
+  const url = new URL(window.location.href);
+  const objectifParam = (url.searchParams.get("objectif") || "").trim().toLowerCase();
+  const normalized = objectifParam.replace(/\s+/g, "-");
+
+  if (normalized !== "") {
+    const target = Array.from(filterButtons).find(
+      (button) => (button.getAttribute("data-filter") || "") === normalized
+    );
+    if (target) {
+      target.click();
+    }
+  }
+}

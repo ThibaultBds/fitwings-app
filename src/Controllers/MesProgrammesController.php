@@ -1,20 +1,21 @@
 <?php
+
 namespace App\Controllers;
 
-use App\Models\UserProgrammeModel;
+use App\Repositories\UserProgrammeRepository;
 
-class MesProgrammesController extends BaseController 
+class MesProgrammesController extends BaseController
 {
-    private $userProgrammeModel;
+    private UserProgrammeRepository $userProgrammeRepository;
 
     public function __construct()
     {
-        $this->userProgrammeModel = new UserProgrammeModel();
+        $this->userProgrammeRepository = new UserProgrammeRepository();
     }
 
-    public function index() 
+    public function index()
     {
-        $programmes = $this->userProgrammeModel->getByUserId($_SESSION['user']['id']);
+        $programmes = $this->userProgrammeRepository->getByUserId($_SESSION['user']['id']);
         $this->render('programmes/my-progs', ['programmes' => $programmes]);
     }
 }

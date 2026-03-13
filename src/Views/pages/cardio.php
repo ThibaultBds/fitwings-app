@@ -84,7 +84,7 @@ require_once __DIR__ . '/../templates/header.php';
 
   <div class="fw-cta">
     <h2>Prêt à booster votre cardio ?</h2>
-    <a href="/pages/contact" class="btn-primary">🔥 Rejoindre Fitwings</a>
+    <a href="/programmes?objectif=cardio" class="btn-primary">Voir les programmes cardio</a>
   </div>
 
 </main>

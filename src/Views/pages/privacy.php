@@ -1,14 +1,14 @@
 <?php
-$titles = ['legal' => 'Mentions légales', 'privacy' => 'Politique de confidentialité', 'terms' => "Conditions d'utilisation"];
+$titles = ['legal' => 'Mentions legales', 'privacy' => 'Politique de confidentialite', 'terms' => "Conditions d'utilisation"];
 $key = 'privacy';
-$pageTitle = 'Fitwings – ' . $titles[$key];
+$pageTitle = 'Fitwings - ' . $titles[$key];
 require_once __DIR__ . '/../templates/header.php';
 ?>
 <main class="container">
   <section class="card">
     <h1><?= $titles[$key] ?></h1>
-    <p style="color:#888;margin-bottom:24px;">Dernière mise à jour : février 2025</p>
-    <p>Ce contenu sera complété prochainement. Pour toute question, contactez-nous à <a href="/pages/contact" style="color:var(--primary)">contact@fitwings.fr</a>.</p>
+    <p class="muted-text legal-updated">Derniere mise a jour : fevrier 2025</p>
+    <p>Ce contenu sera complete prochainement. Pour toute question, contactez-nous a <a href="/pages/contact" class="legal-link">contact@fitwings.fr</a>.</p>
   </section>
 </main>
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

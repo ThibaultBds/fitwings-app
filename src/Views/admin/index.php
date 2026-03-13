@@ -9,6 +9,7 @@ require_once __DIR__ . '/../templates/header.php';
   <?php require __DIR__ . '/_users.php'; ?>
   <?php require __DIR__ . '/_temoignages.php'; ?>
   <?php require __DIR__ . '/_programmes.php'; ?>
+  <?php require __DIR__ . '/_salles.php'; ?>
 </main>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

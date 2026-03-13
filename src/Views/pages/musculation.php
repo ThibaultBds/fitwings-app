@@ -73,7 +73,7 @@ require_once __DIR__ . '/../templates/header.php';
 
   <div class="fw-cta">
     <h2>Prêt à bâtir ton corps ?</h2>
-    <a href="/pages/contact" class="btn-primary">🔥 Commence ton programme</a>
+    <a href="/programmes?objectif=force" class="btn-primary">Voir les programmes force</a>
   </div>
 
 </main>

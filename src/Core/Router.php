@@ -6,7 +6,6 @@ class Router
 {
     private static array $routes = [];
     private static array $groupMiddleware = [];
-    private static array $namedRoutes = [];
 
     public static function get($uri, $action)
     {

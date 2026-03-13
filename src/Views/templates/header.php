@@ -1,9 +1,4 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-?>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -28,6 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <a href="#">Prestations ▾</a>
     <ul class="dropdown-menu">
       <li><a href="/programmes">Programmes</a></li>
+      <li><a href="/salles">Salles</a></li>
       <li><a href="/pages/musculation">Musculation</a></li>
       <li><a href="/pages/cardio">Cardio</a></li>
       <li><a href="/pages/cours">Cours collectifs</a></li>

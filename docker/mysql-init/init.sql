@@ -48,7 +48,14 @@ CREATE TABLE IF NOT EXISTS programme (
     title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
     niveau VARCHAR(50),
-    objectif VARCHAR(100)
+    objectif VARCHAR(100),
+    duree_semaines INT NULL,
+    seances_par_semaine VARCHAR(50) NULL,
+    duree_seance_minutes INT NULL,
+    materiel TEXT NULL,
+    structure_plan TEXT NULL,
+    conseils TEXT NULL,
+    benefices TEXT NULL
 );
 
 CREATE TABLE IF NOT EXISTS programme_utilisateur (

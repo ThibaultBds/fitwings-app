@@ -1,8 +1,11 @@
 <?php
-$pageTitle = 'Fitwings – Abonnements';
+$pageTitle = 'Fitwings - Abonnements';
 require_once __DIR__ . '/../templates/header.php';
-?>
 
+$isLoggedIn = isset($_SESSION['user']);
+$ctaHref = $isLoggedIn ? '/account' : '/register';
+$ctaLabel = $isLoggedIn ? 'Choisir ce plan' : 'Commencer';
+?>
 <header class="page-banner">
   <h1>Nos <span>Abonnements</span></h1>
   <p>Choisissez la formule qui correspond à vos objectifs</p>
@@ -42,7 +45,7 @@ require_once __DIR__ . '/../templates/header.php';
         <li class="ko">Coaching personnalisé</li>
         <li class="ko">Accès invité</li>
       </ul>
-      <a href="/register" class="tarif-btn tarif-btn-outline">Commencer</a>
+      <a href="<?= $ctaHref ?>" class="tarif-btn tarif-btn-outline"><?= $ctaLabel ?></a>
     </div>
 
     <!-- Plan Premium (mis en avant) -->
@@ -65,7 +68,7 @@ require_once __DIR__ . '/../templates/header.php';
         <li class="ok">1 séance coaching / mois</li>
         <li class="ko">Accès invité</li>
       </ul>
-      <a href="/register" class="tarif-btn tarif-btn-primary">Commencer</a>
+      <a href="<?= $ctaHref ?>" class="tarif-btn tarif-btn-primary"><?= $ctaLabel ?></a>
     </div>
 
     <!-- Plan Elite -->
@@ -87,7 +90,7 @@ require_once __DIR__ . '/../templates/header.php';
         <li class="ok">Coach dédié (séances illimitées)</li>
         <li class="ok">1 accès invité / semaine</li>
       </ul>
-      <a href="/register" class="tarif-btn tarif-btn-outline">Commencer</a>
+      <a href="<?= $ctaHref ?>" class="tarif-btn tarif-btn-outline"><?= $ctaLabel ?></a>
     </div>
 
   </div>

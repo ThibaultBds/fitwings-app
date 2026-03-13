@@ -50,6 +50,127 @@
   margin: 0;
 }
 
+.admin-form-spacing {
+  margin-bottom: 20px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.inline-form {
+  display: inline;
+}
+
+.inline-form-spaced {
+  margin-left: 8px;
+}
+
+.stack-form {
+  margin-top: 8px;
+}
+
+.admin-rating {
+  margin-left: 12px;
+}
+
+.admin-form-grid--programme {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: none;
+}
+
+.admin-span-2 {
+  grid-column: 1 / -1;
+}
+
+.admin-submit-row {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.admin-programmes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 14px;
+}
+
+.admin-programmes-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-programme-panel {
+  border: 1px solid rgba(255, 152, 0, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.admin-programme-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.admin-programme-summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-programme-summary-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-programme-summary-main strong {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.admin-programme-summary-main small {
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 560px;
+}
+
+.admin-programme-summary-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.admin-chip {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-programme-card {
+  margin-bottom: 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+}
+
+.admin-programme-head {
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
 .btn-danger {
   background: #e74c3c;
   color: #fff;
@@ -425,6 +546,14 @@
   text-decoration: none;
 }
 .membre-card-no-plan a:hover { text-decoration: underline; }
+.membre-card--empty {
+  justify-content: center;
+  align-items: center;
+}
+
+.membre-card-no-plan-link {
+  margin-top: 8px;
+}
 
 /* ─── Dashboard compte ─── */
 
@@ -542,6 +671,18 @@
   .hero-sub { font-size: 1rem; }
   .admin-table { font-size: 0.8rem; }
   .admin-table th, .admin-table td { padding: 8px 8px; }
+  .admin-form-grid--programme { grid-template-columns: 1fr; }
+  .admin-span-2,
+  .admin-submit-row { grid-column: auto; }
+  .admin-programmes-grid { grid-template-columns: 1fr; }
+  .admin-programme-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .admin-programme-summary-main small {
+    white-space: normal;
+    max-width: 100%;
+  }
 }
 
 /* ─── Suivi progression (account) ─── */
@@ -1058,6 +1199,66 @@
   text-align: center;
 }
 
+.programme-detail {
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+
+.programme-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+
+.programme-intro {
+  font-size: 1.08rem;
+  margin-bottom: 20px;
+}
+
+.programme-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.programme-meta-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.programme-meta-label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
+}
+
+.programme-block {
+  margin-bottom: 18px;
+  padding: 14px;
+  border-left: 3px solid var(--primary);
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+}
+
+.programme-block h2 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.programme-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
 /* Bordure top colorée selon le niveau */
 .programme-card[data-category*="debutant"]     { border-top-color: #1abc9c; }
 .programme-card[data-category*="intermediaire"]{ border-top-color: var(--primary); }
@@ -1093,6 +1294,13 @@
   color: #888;
   font-size: 1.05rem;
   grid-column: 1 / -1;
+}
+.prog-exercise-item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.92rem;
 }
 .prog-cta-final {
   text-align: center;
@@ -1530,6 +1738,9 @@
   text-decoration: none;
 }
 .auth-switch a:hover { text-decoration: underline; }
+.auth-message {
+  margin-bottom: 16px;
+}
 .form-success {
   background: rgba(26,188,156,0.15);
   border-left: 4px solid #1abc9c;
@@ -1585,6 +1796,10 @@
   margin-bottom: 8px;
 }
 
+.file-input {
+  color: var(--text);
+}
+
 /* ─── TÉMOIGNAGES ─── */
 .temoignages-main {
   max-width: 900px;
@@ -1598,6 +1813,17 @@
 }
 .temoignage-card {
   margin-bottom: 16px;
+}
+
+.temoignage-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.muted-text {
+  color: #888;
 }
 
 /* ─── ADMIN / MODERATOR ─── */
@@ -1619,6 +1845,14 @@
 }
 .admin-table tr:hover td {
   background: rgba(255,152,0,0.05);
+}
+
+.moderator-subtitle {
+  margin-bottom: 24px;
+}
+
+.moderator-action-btn {
+  padding: 4px 10px;
 }
 
 /* ─── SALLES ─── */
@@ -1868,6 +2102,13 @@
 }
 .salle-empty p { margin: 0 0 6px; font-size: 1.05rem; }
 .salle-empty__sub { font-size: 0.9rem; color: rgba(255,255,255,0.3); }
+.salle-empty--spaced {
+  margin-top: 80px;
+}
+
+.salle-empty__action {
+  margin-top: 1rem;
+}
 
 /* ─── PAGE DÉTAIL SALLE ─── */
 .salle-show-hero {
@@ -2025,6 +2266,39 @@ a.salle-qi-block:hover {
 .salle-show-cta__text h3 { margin: 0 0 4px; font-size: 1.1rem; color: #fff; }
 .salle-show-cta__text p { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.5); }
 .salle-show-cta__btn { white-space: nowrap; background: var(--primary) !important; }
+
+.badge-inline {
+  display: inline-block;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hidden-by-default {
+  display: none;
+}
+
+.section-top-spacing {
+  margin-top: 40px;
+}
+
+.section-bottom-spacing {
+  margin-bottom: 60px;
+}
+
+.home-abos-cta {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.legal-updated {
+  margin-bottom: 24px;
+}
+
+.legal-link {
+  color: var(--primary);
+}
 
 @media (max-width: 640px) {
   .salle-show-quickinfo { grid-template-columns: 1fr; }

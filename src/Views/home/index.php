@@ -1,17 +1,14 @@
 <?php
-$pageTitle = 'Fitwings – Accueil';
+$pageTitle = 'Fitwings - Accueil';
 require_once __DIR__ . '/../templates/header.php';
-
 ?>
 
 <main>
-
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">Dépassez vos limites.<br>Chaque jour.</h1>
-      <p class="hero-sub">Programmes sur mesure, coachs certifiés, 3 salles en France.</p>
+      <h1 class="hero-title">Depassez vos limites.<br>Chaque jour.</h1>
+      <p class="hero-sub">Programmes sur mesure, coachs certifies, 3 salles en France.</p>
       <div class="hero-ctas">
         <a href="/programmes" class="prog-btn">Voir les programmes</a>
         <a href="/register" class="hero-btn-outline">Rejoindre Fitwings</a>
@@ -19,7 +16,6 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
   </section>
 
-  <!-- STATS -->
   <section class="stats-bar">
     <div class="stat">
       <span class="stat-number">2 400+</span>
@@ -27,7 +23,7 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
     <div class="stat">
       <span class="stat-number">18</span>
-      <span class="stat-label">Coachs certifiés</span>
+      <span class="stat-label">Coachs certifies</span>
     </div>
     <div class="stat">
       <span class="stat-number">40+</span>
@@ -39,9 +35,8 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
   </section>
 
-  <!-- RECHERCHE -->
-  <section class="container card form-container" style="margin-top:40px;">
-    <h2>Trouver une salle près de chez vous</h2>
+  <section class="container card form-container section-top-spacing">
+    <h2>Trouver une salle pres de chez vous</h2>
     <form method="get" action="/salles" class="search-form">
       <input type="text" name="ville" placeholder="Ex : Paris, Lyon, Marseille..." required />
       <button type="submit" class="btn-search">
@@ -50,74 +45,70 @@ require_once __DIR__ . '/../templates/header.php';
     </form>
   </section>
 
-  <!-- POURQUOI FITWINGS -->
   <section class="container valeurs">
     <h2 class="section-title">Pourquoi Fitwings ?</h2>
     <div class="valeurs-grid">
       <div class="valeur-card card">
         <span class="material-symbols-outlined valeur-icon">emoji_events</span>
-        <h3>Résultats prouvés</h3>
-        <p>Programmes conçus par des experts pour des résultats visibles en 4 semaines.</p>
+        <h3>Resultats prouves</h3>
+        <p>Programmes concus par des experts pour des resultats visibles en 4 semaines.</p>
       </div>
       <div class="valeur-card card">
         <span class="material-symbols-outlined valeur-icon">groups</span>
-        <h3>Communauté soudée</h3>
-        <p>Entraide, motivation collective et esprit d'équipe au cœur de chaque séance.</p>
+        <h3>Communaute soudee</h3>
+        <p>Entraide, motivation collective et esprit d'equipe au coeur de chaque seance.</p>
       </div>
       <div class="valeur-card card">
         <span class="material-symbols-outlined valeur-icon">fitness_center</span>
-        <h3>Équipements premium</h3>
-        <p>Machines dernière génération, entretenues quotidiennement pour votre confort.</p>
+        <h3>Equipements premium</h3>
+        <p>Machines recente generation, entretenues quotidiennement pour votre confort.</p>
       </div>
     </div>
   </section>
 
-  <!-- ABONNEMENTS -->
   <section class="home-abos container">
     <h2 class="section-title">Nos abonnements</h2>
-    <p class="home-abos-sub">Un tarif adapté à chaque objectif, sans mauvaises surprises.</p>
+    <p class="home-abos-sub">Un tarif adapte a chaque objectif, sans mauvaises surprises.</p>
     <div class="home-abos-grid">
       <div class="home-abo-card">
         <h3>Essentiel</h3>
-        <div class="home-abo-price">29<span>€/mois</span></div>
-        <p>Accès salle, cardio, vestiaires</p>
+        <div class="home-abo-price">29<span>EUR/mois</span></div>
+        <p>Acces salle, cardio, vestiaires</p>
       </div>
       <div class="home-abo-card home-abo-card--featured">
         <div class="home-abo-badge">Populaire</div>
         <h3>Premium</h3>
-        <div class="home-abo-price">49<span>€/mois</span></div>
-        <p>+ Cours collectifs &amp; coaching mensuel</p>
+        <div class="home-abo-price">49<span>EUR/mois</span></div>
+        <p>Cours collectifs et coaching mensuel</p>
       </div>
       <div class="home-abo-card">
         <h3>Elite</h3>
-        <div class="home-abo-price">79<span>€/mois</span></div>
-        <p>Coach dédié, séances illimitées</p>
+        <div class="home-abo-price">79<span>EUR/mois</span></div>
+        <p>Coach dedie, seances illimitees</p>
       </div>
     </div>
-    <div style="text-align:center;margin-top:32px;">
+    <div class="home-abos-cta">
       <a href="/abonnements" class="btn-primary">Voir tous nos abonnements</a>
     </div>
   </section>
 
-  <!-- TÉMOIGNAGES -->
-  <section class="container" style="margin-bottom:60px;">
+  <section class="container section-bottom-spacing">
     <h2 class="section-title">Ce que disent nos membres</h2>
     <div class="temoignages">
       <div class="temoignage">
-        <p>"Ambiance motivante et coachs à l'écoute !"</p>
-        <strong>— Sarah, 28 ans</strong>
+        <p>"Ambiance motivante et coachs a l'ecoute."</p>
+        <strong>Sarah, 28 ans</strong>
       </div>
       <div class="temoignage">
-        <p>"Salle propre, matériel neuf, suivi personnalisé."</p>
-        <strong>— Julien, 35 ans</strong>
+        <p>"Salle propre, materiel neuf, suivi personnalise."</p>
+        <strong>Julien, 35 ans</strong>
       </div>
       <div class="temoignage">
-        <p>"Diversité des cours et esprit d'équipe, top !"</p>
-        <strong>— Amine, 41 ans</strong>
+        <p>"Diversite des cours et esprit d'equipe."</p>
+        <strong>Amine, 41 ans</strong>
       </div>
     </div>
   </section>
-
 </main>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

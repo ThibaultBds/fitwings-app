@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 namespace App\Middleware;
 
-class AuthMiddleware {
-    public function handle() {
+class AuthMiddleware
+{
+    public function handle(): void
+    {
         if (!isset($_SESSION['user'])) {
             header('Location: /login');
             exit;

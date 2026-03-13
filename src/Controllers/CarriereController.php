@@ -2,38 +2,39 @@
 
 namespace App\Controllers;
 
-use App\Models\CandidatureModel;
 use App\Core\Csrf;
+use App\Repositories\CandidatureRepository;
+use App\Security\Input;
 
 class CarriereController extends BaseController
 {
-    private $candidatureModel;
-    private $csrf;
+    private CandidatureRepository $candidatureRepository;
+    private Csrf $csrf;
 
     public function __construct()
     {
-        $this->candidatureModel = new CandidatureModel();
+        $this->candidatureRepository = new CandidatureRepository();
         $this->csrf = new Csrf();
     }
 
     public function index()
     {
         $success = false;
-        $erreur  = '';
+        $erreur = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
-                $nom       = trim($_POST['nom'] ?? '');
-                $email     = trim($_POST['email'] ?? '');
-                $telephone = trim($_POST['telephone'] ?? '');
-                $poste     = trim($_POST['poste'] ?? '');
-                $message   = trim($_POST['message'] ?? '');
+                $nom = Input::string($_POST, 'nom', 120);
+                $email = Input::email($_POST, 'email');
+                $telephone = Input::string($_POST, 'telephone', 30);
+                $poste = Input::string($_POST, 'poste', 120);
+                $message = Input::string($_POST, 'message', 2000);
 
                 if ($nom && $email && $message) {
-                    $this->candidatureModel->create($nom, $email, $telephone, $poste, $message);
+                    $this->candidatureRepository->create($nom, $email, $telephone, $poste, $message);
                     $success = true;
                 } else {
-                    $erreur = "Tous les champs obligatoires doivent être remplis.";
+                    $erreur = "Tous les champs obligatoires doivent etre remplis.";
                 }
             } else {
                 $erreur = "Token invalide.";
@@ -41,9 +42,9 @@ class CarriereController extends BaseController
         }
 
         $this->render('pages/carriere', [
-            'success'    => $success,
-            'erreur'     => $erreur,
-            'csrf_token' => $this->csrf->generate()
+            'success' => $success,
+            'erreur' => $erreur,
+            'csrf_token' => $this->csrf->generate(),
         ]);
     }
 }

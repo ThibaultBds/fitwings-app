@@ -2,17 +2,18 @@
 
 namespace App\Controllers;
 
-use App\Models\TemoignageModel;
 use App\Core\Csrf;
+use App\Repositories\TemoignageRepository;
+use App\Security\Input;
 
 class TemoignageController extends BaseController
 {
-    private $temoignagesModel;
-    private $csrf;
+    private TemoignageRepository $temoignageRepository;
+    private Csrf $csrf;
 
     public function __construct()
     {
-        $this->temoignagesModel = new TemoignageModel();
+        $this->temoignageRepository = new TemoignageRepository();
         $this->csrf = new Csrf();
     }
 
@@ -22,27 +23,29 @@ class TemoignageController extends BaseController
         $erreur = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
-                $note = (int)($_POST['note'] ?? '');
-                $contenu = trim($_POST['contenu'] ?? '');
+            if (!isset($_SESSION['user']['id'])) {
+                $erreur = "Vous devez etre connecte pour publier un temoignage.";
+            } elseif ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
+                $note = Input::int($_POST, 'note', 0);
+                $contenu = Input::string($_POST, 'contenu', 300);
 
-                if ($note  >=1 && $note <= 5 && $contenu) {
-                    $this->temoignagesModel->create($_SESSION['user']['id'], $note, $contenu);
+                if ($note >= 1 && $note <= 5 && $contenu) {
+                    $this->temoignageRepository->create($_SESSION['user']['id'], $note, $contenu);
                     $success = true;
                 } else {
-                    $erreur = "Tous les champs doivent être remplis.";
+                    $erreur = "Tous les champs doivent etre remplis.";
                 }
             } else {
                 $erreur = "Token invalide.";
             }
         }
 
-        $temoignages = $this->temoignagesModel->getApprouves();
+        $temoignages = $this->temoignageRepository->getApprouves();
 
         $this->render('pages/temoignages', [
-            'success'     => $success,
-            'erreur'      => $erreur,
-            'csrf_token'  => $this->csrf->generate(),
+            'success' => $success,
+            'erreur' => $erreur,
+            'csrf_token' => $this->csrf->generate(),
             'temoignages' => $temoignages,
         ]);
     }

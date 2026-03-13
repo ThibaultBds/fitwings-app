@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\BaseModel;
-
-class SalleModel extends BaseModel {
-    public function findById (int $id) {
-        $stmt = $this->db->prepare("SELECT * FROM salle WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
-    }
-
-    public function findByVille(string $ville) {
-        $stmt = $this->db->prepare("SELECT * FROM salle WHERE ville LIKE :ville ORDER BY nom");
-        $stmt->execute(['ville' => '%' . $ville . '%']);
-        return $stmt->fetchAll();
-    }
+class SalleModel extends BaseModel
+{
+    public ?int $id = null;
+    public string $nom = '';
+    public string $ville = '';
+    public string $adresse = '';
+    public string $code_postal = '';
+    public string $telephone = '';
+    public string $email = '';
+    public string $horaires = '';
+    public string $description = '';
 }

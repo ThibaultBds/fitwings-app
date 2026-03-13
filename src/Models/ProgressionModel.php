@@ -2,20 +2,12 @@
 
 namespace App\Models;
 
-class ProgressionModel extends BaseModel {
-    public function getByUserId(int $userId) {
-        $stmt = $this->db->prepare("SELECT * FROM progression WHERE user_id = :user_id ORDER BY date_suivi DESC");
-        $stmt->execute(['user_id' => $userId]);
-        return $stmt->fetchAll();
-    }
-
-    public function create (int $userId, float $poids, float $tourTaille, int $nbSeances) {
-        $stmt = $this->db->prepare("INSERT INTO progression (user_id, poids, tour_taille, nombre_seances, date_suivi) VALUES (:user_id, :poids, :tour_taille, :nombre_seances, NOW())");
-        $stmt->execute([
-        'user_id' => $userId,
-        'poids' => $poids,
-        'tour_taille' => $tourTaille,
-        'nombre_seances' => $nbSeances
-        ]);
-    }
+class ProgressionModel extends BaseModel
+{
+    public ?int $id = null;
+    public int $user_id = 0;
+    public float $poids = 0.0;
+    public float $tour_taille = 0.0;
+    public int $nombre_seances = 0;
+    public ?string $date_suivi = null;
 }

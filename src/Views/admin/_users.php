@@ -1,36 +1,39 @@
 <section class="card">
   <h2>Gestion des utilisateurs</h2>
 
-  <div style="overflow-x:auto;">
+  <form method="POST" action="/admin/users/create" class="admin-grid-form admin-form-spacing">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <input class="admin-input" type="text" name="username" placeholder="Pseudo" required>
+    <input class="admin-input" type="email" name="email" placeholder="Email" required>
+    <input class="admin-input" type="password" name="password" placeholder="Mot de passe (8+)" minlength="8" required>
+    <select class="admin-input" name="role">
+      <option value="user">user</option>
+      <option value="moderateur">moderateur</option>
+      <option value="admin">admin</option>
+    </select>
+    <button type="submit" class="prog-btn">Creer utilisateur</button>
+  </form>
+
+  <div class="table-wrap">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>ID</th><th>Pseudo</th><th>Email</th><th>Rôle</th><th>Inscription</th><th>Actions</th>
+          <th>ID</th><th>Pseudo</th><th>Email</th><th>Role</th><th>Inscription</th><th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($users as $u): ?>
         <tr>
-          <td><?= $u['id'] ?></td>
-          <td><?= htmlspecialchars($u['username']) ?></td>
-          <td><?= htmlspecialchars($u['email']) ?></td>
-          <td><span class="badge niveau-<?= $u['role'] === 'admin' ? 'avance' : ($u['role'] === 'moderateur' ? 'intermediaire' : 'debutant') ?>"><?= $u['role'] ?></span></td>
-          <td><?= $u['created_at'] ?></td>
+          <td><?= $u->id ?></td>
+          <td><?= htmlspecialchars($u->username) ?></td>
+          <td><?= htmlspecialchars($u->email) ?></td>
+          <td><span class="badge niveau-<?= $u->role === 'admin' ? 'avance' : ($u->role === 'moderateur' ? 'intermediaire' : 'debutant') ?>"><?= $u->role ?></span></td>
+          <td><?= $u->created_at ?></td>
           <td>
-            <form method="POST" action="/admin/role" style="display:inline;">
+            <?php if ($u->id !== $_SESSION['user']['id']): ?>
+            <form method="POST" action="/admin/delete" class="inline-form">
               <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
-              <input type="hidden" name="role_id" value="<?= $u['id'] ?>">
-              <select name="new_role" class="admin-input">
-                <option value="user" <?= $u['role']==='user'?'selected':'' ?>>user</option>
-                <option value="moderateur" <?= $u['role']==='moderateur'?'selected':'' ?>>moderateur</option>
-                <option value="admin" <?= $u['role']==='admin'?'selected':'' ?>>admin</option>
-              </select>
-              <button type="submit" class="prog-btn admin-btn-sm">Changer</button>
-            </form>
-            <?php if ($u['id'] !== $_SESSION['user']['id']): ?>
-            <form method="POST" action="/admin/delete" style="display:inline;margin-left:8px;">
-              <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
-              <input type="hidden" name="delete_id" value="<?= $u['id'] ?>">
+              <input type="hidden" name="delete_id" value="<?= $u->id ?>">
               <button type="submit" class="btn-danger admin-btn-sm">Supprimer</button>
             </form>
             <?php endif; ?>

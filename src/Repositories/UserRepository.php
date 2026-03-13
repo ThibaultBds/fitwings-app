@@ -11,7 +11,7 @@ class UserRepository extends BaseRepository
         $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id LIMIT 1");
         $stmt->execute(['id' => $id]);
 
-        return $this->hydrateOne($stmt->fetch(), UserModel::class);
+        return $this->toObject($stmt->fetch() ?: null, UserModel::class);
     }
 
     public function findByEmail(string $email): ?UserModel
@@ -19,10 +19,10 @@ class UserRepository extends BaseRepository
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
         $stmt->execute(['email' => $email]);
 
-        return $this->hydrateOne($stmt->fetch(), UserModel::class);
+        return $this->toObject($stmt->fetch() ?: null, UserModel::class);
     }
 
-    public function create(string $username, string $email, string $password): string|false
+    public function create(string $username, string $email, string $password): string
     {
         $stmt = $this->db->prepare("
             INSERT INTO users (username, email, password, role)
@@ -37,7 +37,7 @@ class UserRepository extends BaseRepository
         return $this->db->lastInsertId();
     }
 
-    public function createByAdmin(string $username, string $email, string $password, string $role = 'user'): string|false
+    public function createByAdmin(string $username, string $email, string $password, string $role = 'user'): string
     {
         $stmt = $this->db->prepare("
             INSERT INTO users (username, email, password, role)
@@ -58,16 +58,12 @@ class UserRepository extends BaseRepository
         $stmt = $this->db->prepare("SELECT id, username, email, role, created_at FROM users ORDER BY id ASC");
         $stmt->execute();
 
-        return $this->hydrateMany($stmt->fetchAll(), UserModel::class);
+        return $this->toObjects($stmt->fetchAll(), UserModel::class);
     }
 
     public function updateRole(int $id, string $role): void
     {
-        $stmt = $this->db->prepare("
-            UPDATE users
-            SET role = :role
-            WHERE id = :id
-        ");
+        $stmt = $this->db->prepare("UPDATE users SET role = :role WHERE id = :id");
         $stmt->execute([
             'role' => $role,
             'id' => $id,
@@ -76,11 +72,7 @@ class UserRepository extends BaseRepository
 
     public function delete(int $id): void
     {
-        $stmt = $this->db->prepare("
-            DELETE
-            FROM users
-            WHERE id = :id
-        ");
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id = :id");
         $stmt->execute(['id' => $id]);
     }
 }

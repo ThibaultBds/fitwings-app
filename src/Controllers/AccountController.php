@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\Csrf;
 use App\Repositories\ProgressionRepository;
 use App\Repositories\UserRepository;
-use App\Security\Secu;
+use App\Security\Input;
 
 class AccountController extends BaseController
 {
@@ -23,7 +23,7 @@ class AccountController extends BaseController
     public function index()
     {
         $user = $this->userRepository->findById($_SESSION['user']['id']);
-        $progressions = $user ? $this->progressionRepository->getByUserId($user['id']) : [];
+        $progressions = $user ? $this->progressionRepository->getByUserId($user->id) : [];
 
         $this->render('auth/account', [
             'user' => $user,
@@ -38,9 +38,9 @@ class AccountController extends BaseController
             $this->redirect('/account');
         }
 
-        $poids = Secu::getFloat($_POST, 'poids', 0);
-        $tourTaille = Secu::getFloat($_POST, 'tour_taille', 0);
-        $nbSeances = Secu::getInt($_POST, 'nombre_seances', -1);
+        $poids = Input::float($_POST, 'poids', 0);
+        $tourTaille = Input::float($_POST, 'tour_taille', 0);
+        $nbSeances = Input::int($_POST, 'nombre_seances', -1);
 
         if ($poids <= 0 || $tourTaille <= 0 || $nbSeances < 0) {
             $this->redirect('/account');

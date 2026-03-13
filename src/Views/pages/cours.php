@@ -29,10 +29,40 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
   </section>
 
-  <div class="fw-cta">
-    <h2>Prêt à rejoindre un cours ?</h2>
-    <a href="/pages/contact" class="btn-primary">📩 Réservez votre place</a>
-  </div>
+  <section class="card form-container">
+    <h2>Réserver une place</h2>
+
+    <?php if (!empty($success)): ?>
+      <div class="alert alert-success">Votre réservation a bien été envoyée, on vous recontacte rapidement !</div>
+    <?php endif; ?>
+    <?php if (!empty($erreur)): ?>
+      <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="/pages/cours" class="objectif-form">
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
+
+      <label for="nom">Votre nom *</label>
+      <input type="text" name="nom" id="nom" required maxlength="120">
+
+      <label for="email">Votre email *</label>
+      <input type="email" name="email" id="email" required>
+
+      <label for="cours">Cours souhaité *</label>
+      <select name="cours" id="cours" required>
+        <option value="">-- Choisir un cours --</option>
+        <option value="Yoga">Yoga</option>
+        <option value="HIIT">HIIT</option>
+        <option value="Boxe Fitness">Boxe Fitness</option>
+        <option value="Cross Training">Cross Training</option>
+      </select>
+
+      <label for="message">Message (facultatif)</label>
+      <textarea name="message" id="message" rows="3" maxlength="1000"></textarea>
+
+      <button type="submit" class="prog-btn">Envoyer ma demande</button>
+    </form>
+  </section>
 
 </main>
 

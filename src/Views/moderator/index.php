@@ -1,50 +1,37 @@
 <?php
-$pageTitle = 'Fitwings – Modération';
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /login'); exit;
-}
-if (!in_array($_SESSION['role'], ['admin', 'moderateur'])) {
-    header('Location: /'); exit;
-}
-
-require_once __DIR__ . '/../../templates/header.php';
-// TODO: charger les signalements depuis la BDD
-$signalements_demo = [
-    ['id' => 1, 'user' => 'user123',  'raison' => 'Spam',              'date' => '2025-09-14'],
-    ['id' => 2, 'user' => 'badguy42', 'raison' => 'Contenu offensant', 'date' => '2025-09-15'],
-];
+$pageTitle = 'Fitwings - Modération';
+require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <main class="container">
   <section class="card">
-    <h1>🛡️ Espace Modérateur</h1>
-    <p style="color:#aaa;margin-bottom:24px;">Gestion des signalements</p>
+    <h1>Espace modérateur</h1>
+    <p class="muted-text moderator-subtitle">Témoignages en attente de validation</p>
 
-    <div style="overflow-x:auto;">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>ID</th><th>Utilisateur</th><th>Raison</th><th>Date</th><th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($signalements_demo as $s): ?>
-          <tr>
-            <td><?= $s['id'] ?></td>
-            <td><?= htmlspecialchars($s['user']) ?></td>
-            <td><?= htmlspecialchars($s['raison']) ?></td>
-            <td><?= $s['date'] ?></td>
-            <td>
-              <button class="prog-btn" style="padding:4px 10px;background:linear-gradient(90deg,#e74c3c,#c0392b);">Traiter</button>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+    <?php if (empty($temoignages_attente)): ?>
+      <p class="admin-empty">Aucun témoignage en attente.</p>
+    <?php else: ?>
+      <?php foreach ($temoignages_attente as $t): ?>
+        <div class="admin-item">
+          <strong><?= htmlspecialchars($t->username) ?></strong>
+          <span class="admin-rating"><?= str_repeat('★', (int)$t->note) ?></span>
+          <p><?= htmlspecialchars($t->contenu) ?></p>
+          <form method="POST" action="/moderator/moderer" class="inline-form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+            <input type="hidden" name="id" value="<?= $t->id ?>">
+            <input type="hidden" name="statut" value="approuve">
+            <button type="submit" class="prog-btn admin-btn-sm">Approuver</button>
+          </form>
+          <form method="POST" action="/moderator/moderer" class="inline-form inline-form-spaced">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+            <input type="hidden" name="id" value="<?= $t->id ?>">
+            <input type="hidden" name="statut" value="refuse">
+            <button type="submit" class="btn-danger admin-btn-sm">Refuser</button>
+          </form>
+        </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
   </section>
 </main>
 
-<?php require_once __DIR__ . '/../../templates/footer.php'; ?>
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

@@ -26,6 +26,13 @@ class AdminController extends BaseController
         $this->csrf = new Csrf();
     }
 
+    private function requireCsrf(): void
+    {
+        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
+            $this->redirect('/admin');
+        }
+    }
+
     public function index(): void
     {
         $this->render('admin/index', [
@@ -39,9 +46,7 @@ class AdminController extends BaseController
 
     public function modererTemoignage(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $id = Input::int($_POST, 'id', 0);
         $statut = Input::string($_POST, 'statut', 20);
@@ -55,9 +60,7 @@ class AdminController extends BaseController
 
     public function updateRole(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $roleId = Input::int($_POST, 'role_id', 0);
         $newRole = Input::string($_POST, 'new_role', 20);
@@ -75,9 +78,7 @@ class AdminController extends BaseController
 
     public function deleteUser(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $deleteId = Input::int($_POST, 'delete_id', 0);
         if ($deleteId <= 0 || (int)$_SESSION['user']['id'] === $deleteId) {
@@ -90,9 +91,7 @@ class AdminController extends BaseController
 
     public function createUser(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $username = Input::string($_POST, 'username', 120);
         $email = Input::email($_POST, 'email');
@@ -115,9 +114,7 @@ class AdminController extends BaseController
 
     public function createProgramme(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $title = Input::string($_POST, 'title', 120);
         $description = Input::string($_POST, 'description', 5000);
@@ -144,9 +141,7 @@ class AdminController extends BaseController
 
     public function updateProgramme(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $id = Input::int($_POST, 'id', 0);
         $title = Input::string($_POST, 'title', 120);
@@ -174,9 +169,7 @@ class AdminController extends BaseController
 
     public function deleteProgramme(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $programmeId = Input::int($_POST, 'delete_programme', 0);
         if ($programmeId <= 0) {
@@ -189,9 +182,7 @@ class AdminController extends BaseController
 
     public function createSalle(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $nom = Input::string($_POST, 'nom', 120);
         $ville = Input::string($_POST, 'ville', 120);
@@ -212,9 +203,7 @@ class AdminController extends BaseController
 
     public function updateSalle(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $id = Input::int($_POST, 'id', 0);
         $nom = Input::string($_POST, 'nom', 120);
@@ -236,9 +225,7 @@ class AdminController extends BaseController
 
     public function deleteSalle(): void
     {
-        if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-            $this->redirect('/admin');
-        }
+        $this->requireCsrf();
 
         $id = Input::int($_POST, 'delete_salle', 0);
         if ($id <= 0) {

@@ -14,6 +14,7 @@ Router::group(['middleware' => 'AuthMiddleware'], function () {
     Router::get('/account', 'AccountController@index');
     Router::post('/account/progression', 'AccountController@saveProgression');
     Router::get('/mes-programmes', 'MesProgrammesController@index');
+    Router::post('/mes-programmes/desinscrire', 'MesProgrammesController@unsubscribe');
     Router::post('/programmes/inscrire', 'ProgrammeController@inscrire');
     Router::post('/temoignages', 'TemoignageController@index');
 });

@@ -73,7 +73,11 @@ require_once __DIR__ . '/../templates/header.php';
       <div class="programme-actions">
         <?php if (isset($_SESSION['user'])): ?>
           <?php if ($alreadyEnrolled): ?>
-            <p class="badge statut-en_cours badge-inline">Deja inscrit</p>
+            <form method="POST" action="/mes-programmes/desinscrire">
+              <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
+              <input type="hidden" name="programme_id" value="<?= (int)$programme->id ?>">
+              <button type="submit" class="btn-danger">Se desinscrire</button>
+            </form>
           <?php else: ?>
             <form method="POST" action="/programmes/inscrire">
               <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">

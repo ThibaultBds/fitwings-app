@@ -41,13 +41,13 @@ class AuthController extends BaseController
 
             $user = $this->userRepository->findByEmail($email);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user->password)) {
                 session_regenerate_id(true);
                 $_SESSION['user'] = [
-                    'id' => $user['id'],
-                    'username' => $user['username'],
-                    'email' => $user['email'],
-                    'role' => $user['role'] ?? 'user',
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'role' => $user->role ?? 'user',
                 ];
 
                 $this->redirect('/account');

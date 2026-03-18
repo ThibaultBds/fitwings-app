@@ -15,6 +15,16 @@ class Csrf
 
     public function verify(string $token): bool
     {
-        return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+        if (!isset($_SESSION['csrf_token'])) {
+            return false;
+        }
+
+        $valid = hash_equals($_SESSION['csrf_token'], $token);
+
+        if ($valid) {
+            unset($_SESSION['csrf_token']);
+        }
+
+        return $valid;
     }
 }

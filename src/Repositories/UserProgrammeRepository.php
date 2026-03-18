@@ -42,4 +42,16 @@ class UserProgrammeRepository extends BaseRepository
             'programme_id' => $programmeId,
         ]);
     }
+
+    public function remove(int $userId, int $programmeId): void
+    {
+        $stmt = $this->db->prepare("
+            DELETE FROM programme_utilisateur
+            WHERE user_id = :user_id AND programme_id = :programme_id
+        ");
+        $stmt->execute([
+            'user_id' => $userId,
+            'programme_id' => $programmeId,
+        ]);
+    }
 }

@@ -45,17 +45,17 @@
             <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
             <input type="hidden" name="id" value="<?= (int)$p->id ?>">
             <div class="admin-form-grid admin-form-grid--programme">
-              <input type="text" name="title" value="<?= htmlspecialchars($p->title) ?>" required class="admin-input">
-              <textarea name="description" required class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->description) ?></textarea>
-              <input type="text" name="niveau" value="<?= htmlspecialchars($p->niveau ?? '') ?>" class="admin-input">
-              <input type="text" name="objectif" value="<?= htmlspecialchars($p->objectif ?? '') ?>" class="admin-input">
-              <input type="number" name="duree_semaines" value="<?= htmlspecialchars($p->duree_semaines ?? '') ?>" class="admin-input">
-              <input type="text" name="seances_par_semaine" value="<?= htmlspecialchars($p->seances_par_semaine ?? '') ?>" class="admin-input">
-              <input type="number" name="duree_seance_minutes" value="<?= htmlspecialchars($p->duree_seance_minutes ?? '') ?>" class="admin-input">
-              <textarea name="materiel" class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->materiel ?? '') ?></textarea>
-              <textarea name="structure_plan" class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->structure_plan ?? '') ?></textarea>
-              <textarea name="benefices" class="admin-input admin-textarea"><?= htmlspecialchars($p->benefices ?? '') ?></textarea>
-              <textarea name="conseils" class="admin-input admin-textarea"><?= htmlspecialchars($p->conseils ?? '') ?></textarea>
+              <input type="text" name="title" value="<?= htmlspecialchars($p->title) ?>" placeholder="Titre" required class="admin-input">
+              <textarea name="description" placeholder="Description" required class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->description) ?></textarea>
+              <input type="text" name="niveau" value="<?= htmlspecialchars($p->niveau ?? '') ?>" placeholder="Niveau (ex: debutant)" class="admin-input">
+              <input type="text" name="objectif" value="<?= htmlspecialchars($p->objectif ?? '') ?>" placeholder="Objectif (ex: perte de poids)" class="admin-input">
+              <input type="number" name="duree_semaines" value="<?= htmlspecialchars($p->duree_semaines ?? '') ?>" placeholder="Duree (semaines)" class="admin-input">
+              <input type="text" name="seances_par_semaine" value="<?= htmlspecialchars($p->seances_par_semaine ?? '') ?>" placeholder="Seances / semaine (ex: 3)" class="admin-input">
+              <input type="number" name="duree_seance_minutes" value="<?= htmlspecialchars($p->duree_seance_minutes ?? '') ?>" placeholder="Duree d'une seance (minutes)" class="admin-input">
+              <textarea name="materiel" placeholder="Materiel recommande" class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->materiel ?? '') ?></textarea>
+              <textarea name="structure_plan" placeholder="Structure du plan" class="admin-input admin-textarea admin-span-2"><?= htmlspecialchars($p->structure_plan ?? '') ?></textarea>
+              <textarea name="benefices" placeholder="Benefices attendus" class="admin-input admin-textarea"><?= htmlspecialchars($p->benefices ?? '') ?></textarea>
+              <textarea name="conseils" placeholder="Conseils d'execution" class="admin-input admin-textarea"><?= htmlspecialchars($p->conseils ?? '') ?></textarea>
               <button type="submit" class="prog-btn admin-submit-row">Modifier</button>
             </div>
           </form>

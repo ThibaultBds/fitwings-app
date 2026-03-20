@@ -47,7 +47,7 @@ class ContactController extends BaseController
                 $success = mail('contact@fitwings.fr', $subject, $body, implode("\r\n", $headers));
 
                 if (!$success) {
-                    $error = "Le message n'a pas pu etre envoye pour le moment.";
+                    $error = "Le message n'a pas pu être envoyé pour le moment.";
                 } else {
                     $old = ['nom' => '', 'email' => '', 'message' => ''];
                 }

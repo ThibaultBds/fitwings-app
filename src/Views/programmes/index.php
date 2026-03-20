@@ -22,38 +22,6 @@ require_once __DIR__ . '/../templates/header.php';
     <button type="button" data-filter="avance">Avance</button>
   </div>
 
-  <section class="card form-container">
-    <h2>Recevez un programme personnalise</h2>
-    <form method="post" action="" class="objectif-form">
-      <label for="email">Votre email :</label>
-      <input type="email" name="email" id="email" required>
-
-      <label for="objectif">Votre objectif :</label>
-      <select name="objectif" id="objectif" required>
-        <option value="poids">Perte de poids</option>
-        <option value="force">Force et Musculation</option>
-        <option value="cardio">Endurance et Cardio</option>
-        <option value="bienetre">Bien-etre et Sante</option>
-      </select>
-
-      <label for="niveau">Votre niveau :</label>
-      <select name="niveau" id="niveau" required>
-        <option value="debutant">Debutant</option>
-        <option value="intermediaire">Intermediaire</option>
-        <option value="avance">Avance</option>
-      </select>
-
-      <label for="type">Type de programme :</label>
-      <select name="type" id="type" required>
-        <option value="hiit">HIIT</option>
-        <option value="musculation">Musculation</option>
-        <option value="yoga">Yoga</option>
-        <option value="cardio">Cardio classique</option>
-      </select>
-
-      <button type="submit" class="prog-btn">Recevoir mon programme</button>
-    </form>
-  </section>
 
   <section class="prog-grid">
     <h2>Programmes officiels Fitwings</h2>

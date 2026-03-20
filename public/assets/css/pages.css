@@ -50,6 +50,12 @@
   margin: 0;
 }
 
+.admin-input--sm {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  width: auto;
+}
+
 .admin-form-spacing {
   margin-bottom: 20px;
 }
@@ -105,7 +111,7 @@
 .admin-programme-panel {
   border: 1px solid rgba(255, 152, 0, 0.35);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-dark);
   overflow: hidden;
 }
 
@@ -131,12 +137,13 @@
 }
 
 .admin-programme-summary-main strong {
-  color: #fff;
+  color: var(--text);
   font-size: 0.95rem;
 }
 
 .admin-programme-summary-main small {
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text);
+  opacity: 0.55;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -151,17 +158,17 @@
 }
 
 .admin-chip {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--shadow);
   border-radius: 999px;
   padding: 2px 10px;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text);
 }
 
 .admin-programme-card {
   margin-bottom: 0;
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--shadow);
   border-radius: 0;
 }
 
@@ -1256,7 +1263,12 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  align-items: center;
   margin-top: 20px;
+}
+
+.programme-actions form {
+  margin: 0;
 }
 
 /* Bordure top colorée selon le niveau */
@@ -1895,7 +1907,7 @@
   margin-bottom: 12px;
 }
 .salles-banner h1 span { color: var(--primary); }
-.salles-banner p { font-size: 1.05rem; color: rgba(255,255,255,0.55); }
+.salles-banner p { font-size: 1.05rem; color: rgba(255,255,255,0.75); }
 
 /* Barre de recherche */
 .salles-search-wrap {
@@ -1929,7 +1941,7 @@
   font-size: 1rem;
   padding: 10px 4px;
 }
-.salles-search-form input::placeholder { color: rgba(255,255,255,0.35); }
+.salles-search-form input::placeholder { color: var(--text); opacity: 0.4; }
 .salles-search-form button {
   background: var(--primary);
   color: #fff;
@@ -1959,7 +1971,7 @@
   padding: 4px 12px;
   border-radius: 20px;
 }
-.salles-results-city { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
+.salles-results-city { color: var(--text); opacity: 0.6; font-size: 0.95rem; }
 
 /* Grille */
 .salles-grid {
@@ -1972,7 +1984,7 @@
 /* Carte salle */
 .salle-card {
   background: var(--bg-dark);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid var(--shadow);
   border-radius: 14px;
   padding: 1.6rem;
   display: flex;
@@ -2018,7 +2030,7 @@
   font-size: 1.05rem;
   font-weight: 700;
   margin: 0 0 4px;
-  color: #fff;
+  color: var(--text);
   line-height: 1.3;
 }
 .salle-card__city {
@@ -2026,7 +2038,8 @@
   align-items: center;
   gap: 3px;
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.5);
+  color: var(--text);
+  opacity: 0.6;
 }
 .salle-card__city .material-symbols-outlined {
   font-size: 0.95rem;
@@ -2035,7 +2048,8 @@
 .salle-card__address {
   font-style: normal;
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--text);
+  opacity: 0.65;
   line-height: 1.5;
 }
 .salle-card__chips {
@@ -2063,9 +2077,10 @@
 }
 .salle-chip--phone:hover { background: rgba(255,152,0,0.16); }
 .salle-chip--hours {
-  background: rgba(255,255,255,0.04);
-  color: rgba(255,255,255,0.65);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--shadow);
+  color: var(--text);
+  opacity: 0.8;
+  border: 1px solid var(--shadow);
 }
 .salle-card__btn {
   margin-top: auto;

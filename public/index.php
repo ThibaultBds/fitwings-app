@@ -11,6 +11,6 @@ $dotenv->safeLoad();
 
 use App\Core\Router;
 
+$router = new Router();
 require __DIR__ . '/../routes/web.php';
-
-Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+$router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

@@ -36,11 +36,12 @@ class ContactController extends BaseController
             } elseif ($old['nom'] === '' || $old['email'] === '' || $old['message'] === '') {
                 $error = 'Tous les champs sont obligatoires.';
             } else {
+                $safeEmail = str_replace(["\r", "\n", "%0a", "%0d"], '', $old['email']);
                 $subject = sprintf('Message de %s via Fitwings', $old['nom']);
                 $body = "Nom : {$old['nom']}\nEmail : {$old['email']}\n\nMessage :\n{$old['message']}";
                 $headers = [
-                    'From: ' . $old['email'],
-                    'Reply-To: ' . $old['email'],
+                    'From: ' . $safeEmail,
+                    'Reply-To: ' . $safeEmail,
                 ];
 
                 $success = mail('contact@fitwings.fr', $subject, $body, implode("\r\n", $headers));

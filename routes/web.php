@@ -4,80 +4,80 @@ declare(strict_types=1);
 
 use App\Core\Router;
 
-Router::get('/login', 'AuthController@login');
-Router::post('/login', 'AuthController@login');
-Router::get('/register', 'AuthController@register');
-Router::post('/register', 'AuthController@register');
-Router::get('/logout', 'AuthController@logout');
+$router->get('/login', 'AuthController@login');
+$router->post('/login', 'AuthController@login');
+$router->get('/register', 'AuthController@register');
+$router->post('/register', 'AuthController@register');
+$router->get('/logout', 'AuthController@logout');
 
-Router::group(['middleware' => 'AuthMiddleware'], function () {
-    Router::get('/account', 'AccountController@index');
-    Router::post('/account/progression', 'AccountController@saveProgression');
-    Router::get('/mes-programmes', 'MesProgrammesController@index');
-    Router::post('/mes-programmes/desinscrire', 'MesProgrammesController@unsubscribe');
-    Router::post('/programmes/inscrire', 'ProgrammeController@inscrire');
-    Router::post('/temoignages', 'TemoignageController@index');
+$router->group(['middleware' => 'AuthMiddleware'], function (Router $router) {
+    $router->get('/account', 'AccountController@index');
+    $router->post('/account/progression', 'AccountController@saveProgression');
+    $router->get('/mes-programmes', 'MesProgrammesController@index');
+    $router->post('/mes-programmes/desinscrire', 'MesProgrammesController@unsubscribe');
+    $router->post('/programmes/inscrire', 'ProgrammeController@inscrire');
+    $router->post('/temoignages', 'TemoignageController@index');
 });
 
-Router::group(['middleware' => 'ModeratorMiddleware'], function () {
-    Router::get('/moderator', 'ModeratorController@index');
-    Router::post('/moderator/moderer', 'ModeratorController@moderer');
+$router->group(['middleware' => 'ModeratorMiddleware'], function (Router $router) {
+    $router->get('/moderator', 'ModeratorController@index');
+    $router->post('/moderator/moderer', 'ModeratorController@moderer');
 });
 
-Router::group(['middleware' => 'AdminMiddleware'], function () {
-    Router::get('/admin', 'AdminController@index');
-    Router::post('/admin/moderer', 'AdminController@modererTemoignage');
-    Router::post('/admin/role', 'AdminController@updateRole');
-    Router::post('/admin/delete', 'AdminController@deleteUser');
-    Router::post('/admin/users/create', 'AdminController@createUser');
-    Router::post('/admin/programmes/create', 'AdminController@createProgramme');
-    Router::post('/admin/programmes/update', 'AdminController@updateProgramme');
-    Router::post('/admin/programmes/delete', 'AdminController@deleteProgramme');
-    Router::post('/admin/salles/create', 'AdminController@createSalle');
-    Router::post('/admin/salles/update', 'AdminController@updateSalle');
-    Router::post('/admin/salles/delete', 'AdminController@deleteSalle');
+$router->group(['middleware' => 'AdminMiddleware'], function (Router $router) {
+    $router->get('/admin', 'AdminController@index');
+    $router->post('/admin/moderer', 'AdminController@modererTemoignage');
+    $router->post('/admin/role', 'AdminController@updateRole');
+    $router->post('/admin/delete', 'AdminController@deleteUser');
+    $router->post('/admin/users/create', 'AdminController@createUser');
+    $router->post('/admin/programmes/create', 'AdminController@createProgramme');
+    $router->post('/admin/programmes/update', 'AdminController@updateProgramme');
+    $router->post('/admin/programmes/delete', 'AdminController@deleteProgramme');
+    $router->post('/admin/salles/create', 'AdminController@createSalle');
+    $router->post('/admin/salles/update', 'AdminController@updateSalle');
+    $router->post('/admin/salles/delete', 'AdminController@deleteSalle');
 });
 
-Router::get('/', function () {
+$router->get('/', function () {
     require __DIR__ . '/../src/Views/home/index.php';
 });
 
-Router::get('/programmes', 'ProgrammeController@index');
-Router::get('/programmes/show', 'ProgrammeController@show');
+$router->get('/programmes', 'ProgrammeController@index');
+$router->get('/programmes/show', 'ProgrammeController@show');
 
-Router::get('/salles', 'SalleController@index');
-Router::get('/salles/show', 'SalleController@show');
+$router->get('/salles', 'SalleController@index');
+$router->get('/salles/show', 'SalleController@show');
 
-Router::get('/pages/cardio', function () {
+$router->get('/pages/cardio', function () {
     require __DIR__ . '/../src/Views/pages/cardio.php';
 });
-Router::get('/pages/musculation', function () {
+$router->get('/pages/musculation', function () {
     require __DIR__ . '/../src/Views/pages/musculation.php';
 });
-Router::get('/pages/cours', 'ReservationController@index');
-Router::post('/pages/cours', 'ReservationController@index');
-Router::get('/pages/coaching', function () {
+$router->get('/pages/cours', 'ReservationController@index');
+$router->post('/pages/cours', 'ReservationController@index');
+$router->get('/pages/coaching', function () {
     require __DIR__ . '/../src/Views/pages/coaching.php';
 });
-Router::get('/pages/bienetre', function () {
+$router->get('/pages/bienetre', function () {
     require __DIR__ . '/../src/Views/pages/bienetre.php';
 });
-Router::get('/abonnements', function () {
+$router->get('/abonnements', function () {
     require __DIR__ . '/../src/Views/pages/abonnements.php';
 });
 
-Router::get('/pages/contact', 'ContactController@index');
-Router::post('/pages/contact', 'ContactController@index');
-Router::get('/carriere', 'CarriereController@index');
-Router::post('/carriere', 'CarriereController@index');
-Router::get('/temoignages', 'TemoignageController@index');
+$router->get('/pages/contact', 'ContactController@index');
+$router->post('/pages/contact', 'ContactController@index');
+$router->get('/carriere', 'CarriereController@index');
+$router->post('/carriere', 'CarriereController@index');
+$router->get('/temoignages', 'TemoignageController@index');
 
-Router::get('/pages/legal', function () {
+$router->get('/pages/legal', function () {
     require __DIR__ . '/../src/Views/pages/legal.php';
 });
-Router::get('/pages/privacy', function () {
+$router->get('/pages/privacy', function () {
     require __DIR__ . '/../src/Views/pages/privacy.php';
 });
-Router::get('/pages/terms', function () {
+$router->get('/pages/terms', function () {
     require __DIR__ . '/../src/Views/pages/terms.php';
 });

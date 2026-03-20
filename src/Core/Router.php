@@ -4,88 +4,76 @@ namespace App\Core;
 
 class Router
 {
-    private static array $routes = [];
-    private static array $groupMiddleware = [];
+    private array $routes = [];
+    private array $groupMiddleware = [];
 
-    public static function get($uri, $action)
+    public function get($uri, $action): void
     {
-        return self::addRoute('GET', $uri, $action);
+        $this->addRoute('GET', $uri, $action);
     }
 
-    public static function post($uri, $action)
+    public function post($uri, $action): void
     {
-        return self::addRoute('POST', $uri, $action);
+        $this->addRoute('POST', $uri, $action);
     }
 
-    public static function put($uri, $action)
+    public function put($uri, $action): void
     {
-        return self::addRoute('PUT', $uri, $action);
+        $this->addRoute('PUT', $uri, $action);
     }
 
-    public static function delete($uri, $action)
+    public function delete($uri, $action): void
     {
-        return self::addRoute('DELETE', $uri, $action);
+        $this->addRoute('DELETE', $uri, $action);
     }
 
-    public static function group($attributes, $callback)
+    public function group(array $attributes, callable $callback): void
     {
-        $previousMiddleware = self::$groupMiddleware;
+        $previousMiddleware = $this->groupMiddleware;
 
         if (isset($attributes['middleware'])) {
-            self::$groupMiddleware = array_merge(
-                self::$groupMiddleware,
+            $this->groupMiddleware = array_merge(
+                $this->groupMiddleware,
                 is_array($attributes['middleware'])
                     ? $attributes['middleware']
                     : [$attributes['middleware']]
             );
         }
 
-        $callback();
+        $callback($this);
 
-        self::$groupMiddleware = $previousMiddleware;
+        $this->groupMiddleware = $previousMiddleware;
     }
 
-    private static function addRoute($method, $uri, $action)
+    private function addRoute(string $method, string $uri, $action): void
     {
         $uri = '/' . trim($uri, '/');
 
-        $route = [
-            'method' => $method,
-            'uri' => $uri,
-            'action' => $action,
-            'middleware' => self::$groupMiddleware,
-            'pattern' => self::compilePattern($uri)
+        $this->routes[] = [
+            'method'     => $method,
+            'uri'        => $uri,
+            'action'     => $action,
+            'middleware' => $this->groupMiddleware,
+            'pattern'    => $this->compilePattern($uri),
         ];
-
-        self::$routes[] = $route;
-
-        return $route;
     }
 
-    private static function compilePattern($uri)
+    private function compilePattern(string $uri): string
     {
-        $pattern = preg_replace(
-            '/\{[^}]+\}/',
-            '([^/]+)',
-            $uri
-        );
-
+        $pattern = preg_replace('/\{[^}]+\}/', '([^/]+)', $uri);
         return '#^' . $pattern . '$#';
     }
 
-    public static function dispatch($uri, $method)
+    public function dispatch(string $uri, string $method): void
     {
-        $uri = parse_url($uri, PHP_URL_PATH);
-        $uri = '/' . trim($uri, '/');
+        $uri = '/' . trim(parse_url($uri, PHP_URL_PATH), '/');
 
-        foreach (self::$routes as $route) {
-
+        foreach ($this->routes as $route) {
             if ($route['method'] !== $method) {
                 continue;
             }
 
             if (preg_match($route['pattern'], $uri, $matches)) {
-
                 array_shift($matches);
 
                 foreach ($route['middleware'] as $middleware) {
@@ -93,16 +81,13 @@ class Router
                     (new $middlewareClass())->handle();
                 }
 
-                // Si c’est une fonction anonyme
                 if (is_callable($route['action'])) {
-                    return call_user_func_array($route['action'], $matches);
+                    call_user_func_array($route['action'], $matches);
+                    return;
                 }
 
-                // Si c’est "Controller@method"
                 if (is_string($route['action'])) {
-
                     [$controller, $actionMethod] = explode('@', $route['action']);
-
                     $controller = "App\\Controllers\\$controller";
 
                     if (!class_exists($controller)) {
@@ -115,7 +100,8 @@ class Router
                         throw new \Exception("Method $actionMethod not found in $controller");
                     }
 
-                    return call_user_func_array([$instance, $actionMethod], $matches);
+                    call_user_func_array([$instance, $actionMethod], $matches);
+                    return;
                 }
             }
         }

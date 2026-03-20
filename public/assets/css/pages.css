@@ -2151,10 +2151,11 @@
   align-items: center;
   gap: 4px;
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.45);
+  color: var(--text);
+  opacity: 0.6;
   text-decoration: none;
   margin-bottom: 20px;
-  transition: color 0.2s;
+  transition: color 0.2s, opacity 0.2s;
 }
 .salle-show-back .material-symbols-outlined { font-size: 1rem; }
 .salle-show-back:hover { color: var(--primary); }
@@ -2184,7 +2185,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
   font-size: 1rem;
 }
 .salle-show-hero__loc .material-symbols-outlined { font-size: 1.1rem; color: var(--primary); }
@@ -2201,7 +2202,7 @@
   align-items: flex-start;
   gap: 14px;
   background: var(--bg-dark);
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid var(--shadow);
   border-radius: 12px;
   padding: 1.1rem 1.2rem;
   text-decoration: none;
@@ -2223,11 +2224,12 @@ a.salle-qi-block:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: rgba(255,255,255,0.4);
+  color: var(--text);
+  opacity: 0.5;
 }
 .salle-qi-value {
   font-size: 0.92rem;
-  color: rgba(255,255,255,0.85);
+  color: var(--text);
   line-height: 1.4;
   word-break: break-word;
 }
@@ -2261,7 +2263,8 @@ a.salle-qi-block:hover {
 .salle-show-desc p {
   margin: 0;
   line-height: 1.75;
-  color: rgba(255,255,255,0.75);
+  color: var(--text);
+  opacity: 0.85;
   font-size: 0.97rem;
 }
 
@@ -2278,8 +2281,8 @@ a.salle-qi-block:hover {
   margin-bottom: 60px;
   flex-wrap: wrap;
 }
-.salle-show-cta__text h3 { margin: 0 0 4px; font-size: 1.1rem; color: #fff; }
-.salle-show-cta__text p { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+.salle-show-cta__text h3 { margin: 0 0 4px; font-size: 1.1rem; color: var(--text); }
+.salle-show-cta__text p { margin: 0; font-size: 0.9rem; color: var(--text); opacity: 0.6; }
 .salle-show-cta__btn { white-space: nowrap; background: var(--primary) !important; }
 
 .badge-inline {

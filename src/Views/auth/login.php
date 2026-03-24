@@ -7,7 +7,7 @@ require_once __DIR__ . '/../templates/header.php';
   <div class="auth-card">
     <div class="auth-logo">Fitwings</div>
     <h1>Bon retour</h1>
-    <p>Connectez-vous a votre espace membre</p>
+    <p>Connectez-vous à votre espace membre</p>
 
     <?php if (!empty($error)): ?>
       <div class="form-error auth-message"><?= htmlspecialchars($error) ?></div>

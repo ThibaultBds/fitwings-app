@@ -6,8 +6,8 @@ require_once __DIR__ . '/../templates/header.php';
 <main class="auth-main">
   <div class="auth-card">
     <div class="auth-logo">Fitwings</div>
-    <h1>Creer un compte</h1>
-    <p>Rejoignez la communaute Fitwings</p>
+    <h1>Créer un compte</h1>
+    <p>Rejoignez la communauté Fitwings</p>
 
     <?php if (!empty($error)): ?>
       <div class="form-error auth-message"><?= htmlspecialchars($error) ?></div>
@@ -30,10 +30,10 @@ require_once __DIR__ . '/../templates/header.php';
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" required placeholder="Choisissez un mot de passe">
       </div>
-      <button type="submit" class="auth-btn">Creer mon compte</button>
+      <button type="submit" class="auth-btn">Créer mon compte</button>
     </form>
 
-    <p class="auth-switch">Deja un compte ? <a href="/login">Se connecter</a></p>
+    <p class="auth-switch">Déjà un compte ? <a href="/login">Se connecter</a></p>
   </div>
 </main>
 

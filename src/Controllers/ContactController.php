@@ -32,7 +32,7 @@ class ContactController extends BaseController
             ];
 
             if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
-                $error = 'La session du formulaire a expire. Reessayez.';
+                $error = 'La session du formulaire a expiré. Réessayez.';
             } elseif ($old['nom'] === '' || $old['email'] === '' || $old['message'] === '') {
                 $error = 'Tous les champs sont obligatoires.';
             } else {

@@ -4,11 +4,11 @@ require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <main class="temoignages-main container">
-  <h1>Temoignages</h1>
+  <h1>Témoignages</h1>
   <p>Ce que nos membres disent de Fitwings.</p>
 
   <?php if ($success): ?>
-    <div class="alert alert-success">Votre temoignage a ete envoye et sera visible apres moderation.</div>
+    <div class="alert alert-success">Votre témoignage a été envoyé et sera visible après modération.</div>
   <?php endif; ?>
   <?php if ($erreur): ?>
     <div class="alert alert-error"><?= htmlspecialchars($erreur) ?></div>
@@ -19,7 +19,7 @@ require_once __DIR__ . '/../templates/header.php';
     <h2>Laissez votre avis</h2>
     <form method="POST" action="/temoignages" class="objectif-form">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
-      <label for="note">Note (1 a 5)</label>
+      <label for="note">Note (1 à 5)</label>
       <input type="number" name="note" id="note" min="1" max="5" value="5" required>
       <label for="contenu">Votre message (300 caracteres max)</label>
       <textarea name="contenu" id="contenu" maxlength="300" rows="4" required></textarea>
@@ -27,7 +27,7 @@ require_once __DIR__ . '/../templates/header.php';
     </form>
   </section>
   <?php else: ?>
-    <p><a href="/login">Connectez-vous</a> pour laisser un temoignage.</p>
+    <p><a href="/login">Connectez-vous</a> pour laisser un témoignage.</p>
   <?php endif; ?>
 
   <section class="temoignages">
@@ -43,7 +43,7 @@ require_once __DIR__ . '/../templates/header.php';
         </div>
       <?php endforeach; ?>
     <?php else: ?>
-      <p>Aucun temoignage pour le moment. Soyez le premier.</p>
+      <p>Aucun témoignage pour le moment. Soyez le premier.</p>
     <?php endif; ?>
   </section>
 </main>

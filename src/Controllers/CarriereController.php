@@ -33,7 +33,7 @@ class CarriereController extends BaseController
                     $this->candidatureRepository->create($nom, $email, $telephone, '', $message);
                     $success = true;
                 } else {
-                    $erreur = "Tous les champs obligatoires doivent etre remplis.";
+                    $erreur = "Tous les champs obligatoires doivent être remplis.";
                 }
             } else {
                 $erreur = "Token invalide.";

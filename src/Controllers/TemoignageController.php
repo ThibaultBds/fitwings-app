@@ -24,7 +24,7 @@ class TemoignageController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_SESSION['user']['id'])) {
-                $erreur = "Vous devez etre connecte pour publier un temoignage.";
+                $erreur = "Vous devez être connecté pour publier un témoignage.";
             } elseif ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
                 $note = Input::int($_POST, 'note', 0);
                 $contenu = Input::string($_POST, 'contenu', 300);
@@ -33,7 +33,7 @@ class TemoignageController extends BaseController
                     $this->temoignageRepository->create($_SESSION['user']['id'], $note, $contenu);
                     $success = true;
                 } else {
-                    $erreur = "Tous les champs doivent etre remplis.";
+                    $erreur = "Tous les champs doivent être remplis.";
                 }
             } else {
                 $erreur = "Token invalide.";

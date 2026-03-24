@@ -22,7 +22,7 @@ class AuthController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
                 $this->render('auth/login', [
-                    'error' => 'La session a expire. Merci de recommencer.',
+                    'error' => 'La session a expiré. Merci de recommencer.',
                     'csrf_token' => $this->csrf->generate(),
                 ]);
                 return;
@@ -68,7 +68,7 @@ class AuthController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$this->csrf->verify($_POST['csrf_token'] ?? '')) {
                 $this->render('auth/register', [
-                    'error' => 'La session a expire. Merci de recommencer.',
+                    'error' => 'La session a expiré. Merci de recommencer.',
                     'csrf_token' => $this->csrf->generate(),
                 ]);
                 return;
@@ -104,7 +104,7 @@ class AuthController extends BaseController
 
             if ($this->userRepository->findByEmail($email)) {
                 $this->render('auth/register', [
-                    'error' => 'Email deja utilise.',
+                    'error' => 'Email déjà utilisé.',
                     'csrf_token' => $this->csrf->generate(),
                 ]);
                 return;

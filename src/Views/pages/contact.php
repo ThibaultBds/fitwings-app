@@ -5,14 +5,14 @@ require_once __DIR__ . '/../templates/header.php';
 
 <header class="page-banner">
   <h1>Contactez-<span>nous</span></h1>
-  <p>Une question, un conseil ou envie de rejoindre Fitwings ? Ecrivez-nous.</p>
+  <p>Une question, un conseil ou envie de rejoindre Fitwings ? Écrivez-nous.</p>
 </header>
 
 <main class="contact-main">
   <section class="contact-form-section card">
     <h2>Envoyez-nous un message</h2>
     <?php if (!empty($success)): ?>
-      <div class="form-success">Message envoye. Nous vous repondrons sous 48h.</div>
+      <div class="form-success">Message envoyé. Nous vous répondrons sous 48h.</div>
     <?php elseif (!empty($error)): ?>
       <div class="form-error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
@@ -41,7 +41,7 @@ require_once __DIR__ . '/../templates/header.php';
         <p>123 Rue de la Force, 75000 Paris</p>
       </div>
       <div class="contact-item">
-        <h3>Telephone</h3>
+        <h3>Téléphone</h3>
         <p>+33 1 23 45 67 89</p>
       </div>
       <div class="contact-item">

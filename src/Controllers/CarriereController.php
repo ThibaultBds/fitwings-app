@@ -27,11 +27,10 @@ class CarriereController extends BaseController
                 $nom = Input::string($_POST, 'nom', 120);
                 $email = Input::email($_POST, 'email');
                 $telephone = Input::string($_POST, 'telephone', 30);
-                $poste = Input::string($_POST, 'poste', 120);
                 $message = Input::string($_POST, 'message', 2000);
 
                 if ($nom && $email && $message) {
-                    $this->candidatureRepository->create($nom, $email, $telephone, $poste, $message);
+                    $this->candidatureRepository->create($nom, $email, $telephone, '', $message);
                     $success = true;
                 } else {
                     $erreur = "Tous les champs obligatoires doivent etre remplis.";

@@ -16,7 +16,7 @@ require_once __DIR__ . '/../templates/header.php';
     <?php elseif ($erreur): ?>
       <div class="form-error"><?= htmlspecialchars($erreur) ?></div>
     <?php endif; ?>
-    <form method="POST" action="" enctype="multipart/form-data" class="objectif-form">
+    <form method="POST" action="" class="objectif-form">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
       <label for="nom">Votre nom</label>
       <input type="text" name="nom" id="nom" required>
@@ -26,8 +26,6 @@ require_once __DIR__ . '/../templates/header.php';
       <input type="tel" name="telephone" id="telephone" required>
       <label for="message">Votre motivation</label>
       <textarea name="message" id="message" rows="5" required class="textarea-field"></textarea>
-      <label for="cv">CV (PDF, optionnel)</label>
-      <input type="file" name="cv" id="cv" accept=".pdf" class="file-input">
       <button type="submit" class="prog-btn">Envoyer ma candidature</button>
     </form>
   </section>

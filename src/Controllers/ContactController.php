@@ -40,7 +40,7 @@ class ContactController extends BaseController
                 $subject = sprintf('Message de %s via Fitwings', $old['nom']);
                 $body = "Nom : {$old['nom']}\nEmail : {$old['email']}\n\nMessage :\n{$old['message']}";
                 $headers = [
-                    'From: ' . $safeEmail,
+                    'From: noreply@fitwings.fr',
                     'Reply-To: ' . $safeEmail,
                 ];
 

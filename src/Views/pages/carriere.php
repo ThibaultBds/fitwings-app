@@ -12,7 +12,7 @@ require_once __DIR__ . '/../templates/header.php';
   <section class="card form-container">
     <h2>Deposez votre candidature</h2>
     <?php if ($success): ?>
-      <div class="form-success">Votre candidature a bien ete envoyee.</div>
+      <div class="form-success">Votre candidature a bien été envoyée.</div>
     <?php elseif ($erreur): ?>
       <div class="form-error"><?= htmlspecialchars($erreur) ?></div>
     <?php endif; ?>

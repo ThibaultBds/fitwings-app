@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".prog-objectifs-buttons button");
-  // Sélectionne les boutons de filtre et les cartes de programme
   const cards = document.querySelectorAll(".cards-grid .programme-card");
 
-  // initialisation silencieuse
 
   let activeFilters = [];
 
@@ -14,12 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.forEach(card => {
       const raw = (card.dataset.category || "").toLowerCase().trim();
       const categories = raw.split(/\s+/);
-      // Si pas de filtres actifs => montrer tout
-      // LOGIQUE OR : match si la carte contient au moins un des filtres actifs
       const match = activeFilters.length === 0 || activeFilters.some(f => categories.includes(f));
       card.classList.toggle("hidden", !match);
     });
-    // afficher message si aucun résultat visible
     const visible = Array.from(cards).filter(c => !c.classList.contains('hidden')).length;
     const noEl = document.getElementById('no-results');
     if (noEl) {
@@ -27,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Ajouter un écouteur sur le conteneur (délégation) — plus robuste si quelque chose bloque les boutons
   const btnContainer = document.querySelector('.prog-objectifs-buttons');
   if (btnContainer) {
     btnContainer.addEventListener('click', (ev) => {
@@ -51,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // si aucun filtre actif, remettre le bouton 'all' actif
       if (activeFilters.length === 0 && allBtn) {
         buttons.forEach(b => b.classList.remove("active"));
         allBtn.classList.add("active");
@@ -60,10 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
       applyFilters();
     });
   } else {
-    // conteneur non trouvé — rien à faire
   }
 
-  // Appliquer une première fois (par ex. pour cacher ce qu'il faut)
   applyFilters();
-  // initial application done
 });
+
+

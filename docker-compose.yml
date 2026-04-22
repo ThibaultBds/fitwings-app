@@ -19,6 +19,7 @@ services:
       - MONGO_URI=mongodb://mongo:27017
       - MAIL_HOST=mailhog
       - MAIL_PORT=1025
+      - MONGO_DB=fitwings
       - DB_HOST=db
       - DB_PORT=3306
       - DB_DATABASE=fitwings
@@ -62,6 +63,18 @@ services:
       - "27018:27017"
     volumes:
       - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:1.0.2-18
+    container_name: fitwings-mongo-express
+    restart: always
+    ports:
+      - "8084:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
 
   mailhog:
     image: mailhog/mailhog

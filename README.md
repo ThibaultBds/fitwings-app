@@ -7,16 +7,19 @@ Pas de framework — MVC maison avec un pattern Repository et des middlewares de
 ## Stack
 
 **Back-end**
+
 - PHP 8.2
 - MySQL 8.4
-- MongoDB 7.0
+- MongoDB 7.0 (messages de contact)
 - Composer / PHPUnit 11
 
 **Front-end**
+
 - HTML / CSS (variables, responsive)
 - JavaScript vanilla
 
 **Infra**
+
 - Docker en local
 - Heroku en production
 
@@ -47,20 +50,24 @@ fitwings/
 ## Fonctionnalités
 
 **Sans compte**
+
 - Parcourir et filtrer les programmes (objectif, niveau)
 - Consulter les salles de sport
 - Lire les témoignages
 - Formulaires contact, réservation de cours, candidature
 
 **Utilisateur connecté**
+
 - S'inscrire à un programme, se désinscrire
 - Suivre sa progression (poids, tour de taille, sessions)
 - Déposer un témoignage (passe par la modération)
 
 **Modérateur**
+
 - Valider ou refuser les témoignages
 
 **Admin**
+
 - CRUD programmes et salles
 - Gestion des comptes (création, rôle, suppression)
 
@@ -103,9 +110,10 @@ docker-compose up -d --build
 
 | Service | URL |
 |---|---|
-| Application | http://localhost:8082 |
-| phpMyAdmin | http://localhost:8083 |
-| MailHog | http://localhost:8026 |
+| Application | <http://localhost:8082> |
+| phpMyAdmin | <http://localhost:8083> |
+| Mongo Express | <http://localhost:8084> |
+| MailHog | <http://localhost:8026> |
 
 Les emails sont interceptés par MailHog en local — rien n'est envoyé pour de vrai.
 
@@ -122,6 +130,7 @@ DB_USERNAME=fitwings_user
 DB_PASSWORD=fitwings_pass
 DB_CHARSET=utf8mb4
 MONGO_URI=mongodb://mongo:27017
+MONGO_DB=fitwings
 MAIL_HOST=mailhog
 MAIL_PORT=1025
 ```
@@ -129,6 +138,7 @@ MAIL_PORT=1025
 ## Base de données
 
 Schéma et données de test dans `docker/mysql-init/` :
+
 - `init.sql` — création des tables
 - `seed.sql` — données de démo
 

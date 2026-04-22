@@ -3,26 +3,29 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\ProgrammeRepository;
-use App\Repositories\SalleRepository;
-use App\Repositories\TemoignageRepository;
-use App\Repositories\UserRepository;
+use App\Service\AdminDashboardService;
+use App\Service\ProgrammeAdminService;
+use App\Service\SalleAdminService;
+use App\Service\TemoignageModerationService;
+use App\Service\UserAdminService;
 use App\Security\Input;
 
 class AdminController extends BaseController
 {
-    private TemoignageRepository $temoignageRepository;
-    private UserRepository $userRepository;
-    private ProgrammeRepository $programmeRepository;
-    private SalleRepository $salleRepository;
+    private AdminDashboardService $dashboardService;
+    private UserAdminService $userAdminService;
+    private ProgrammeAdminService $programmeAdminService;
+    private SalleAdminService $salleAdminService;
+    private TemoignageModerationService $temoignageModerationService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->temoignageRepository = new TemoignageRepository();
-        $this->userRepository = new UserRepository();
-        $this->programmeRepository = new ProgrammeRepository();
-        $this->salleRepository = new SalleRepository();
+        $this->dashboardService = new AdminDashboardService();
+        $this->userAdminService = new UserAdminService();
+        $this->programmeAdminService = new ProgrammeAdminService();
+        $this->salleAdminService = new SalleAdminService();
+        $this->temoignageModerationService = new TemoignageModerationService();
         $this->csrf = new Csrf();
     }
 
@@ -35,13 +38,10 @@ class AdminController extends BaseController
 
     public function index(): void
     {
-        $this->render('admin/index', [
-            'temoignages_attente' => $this->temoignageRepository->getEnAttente(),
-            'users' => $this->userRepository->findAll(),
-            'programmes' => $this->programmeRepository->getAll(),
-            'salles' => $this->salleRepository->getAll(),
-            'csrf_token' => $this->csrf->generate(),
-        ]);
+        $data = $this->dashboardService->getDashboardData();
+        $data['csrf_token'] = $this->csrf->generate();
+
+        $this->render('admin/index', $data);
     }
 
     public function modererTemoignage(): void
@@ -50,11 +50,14 @@ class AdminController extends BaseController
 
         $id = Input::int($_POST, 'id', 0);
         $statut = Input::string($_POST, 'statut', 20);
-        if ($id <= 0 || !Input::oneOf($statut, ['en_attente', 'approuve', 'refuse'])) {
+        $updated = $this->temoignageModerationService->updateStatus(
+            $id,
+            $statut,
+            ['en_attente', 'approuve', 'refuse']
+        );
+        if (!$updated) {
             $this->redirect('/admin');
         }
-
-        $this->temoignageRepository->updateStatut($id, $statut);
         $this->redirect('/admin');
     }
 
@@ -65,14 +68,10 @@ class AdminController extends BaseController
         $roleId = Input::int($_POST, 'role_id', 0);
         $newRole = Input::string($_POST, 'new_role', 20);
 
-        if ($roleId <= 0 || (int)$_SESSION['user']['id'] === $roleId) {
+        $updated = $this->userAdminService->updateRole((int) $_SESSION['user']['id'], $roleId, $newRole);
+        if (!$updated) {
             $this->redirect('/admin');
         }
-        if (!Input::oneOf($newRole, ['user', 'moderateur', 'admin'])) {
-            $this->redirect('/admin');
-        }
-
-        $this->userRepository->updateRole($roleId, $newRole);
         $this->redirect('/admin');
     }
 
@@ -81,11 +80,10 @@ class AdminController extends BaseController
         $this->requireCsrf();
 
         $deleteId = Input::int($_POST, 'delete_id', 0);
-        if ($deleteId <= 0 || (int)$_SESSION['user']['id'] === $deleteId) {
+        $deleted = $this->userAdminService->deleteUser((int) $_SESSION['user']['id'], $deleteId);
+        if (!$deleted) {
             $this->redirect('/admin');
         }
-
-        $this->userRepository->delete($deleteId);
         $this->redirect('/admin');
     }
 
@@ -98,17 +96,10 @@ class AdminController extends BaseController
         $password = (string)($_POST['password'] ?? '');
         $role = Input::string($_POST, 'role', 20);
 
-        if ($username === '' || $email === '' || $password === '' || strlen($password) < 8) {
+        $created = $this->userAdminService->createUser($username, $email, $password, $role);
+        if (!$created) {
             $this->redirect('/admin');
         }
-        if (!Input::oneOf($role, ['user', 'moderateur', 'admin'])) {
-            $this->redirect('/admin');
-        }
-        if ($this->userRepository->findByEmail($email)) {
-            $this->redirect('/admin');
-        }
-
-        $this->userRepository->createByAdmin($username, $email, password_hash($password, PASSWORD_DEFAULT), $role);
         $this->redirect('/admin');
     }
 
@@ -121,10 +112,6 @@ class AdminController extends BaseController
         $niveau = Input::string($_POST, 'niveau', 60);
         $objectif = Input::string($_POST, 'objectif', 120);
 
-        if ($title === '' || $description === '') {
-            $this->redirect('/admin');
-        }
-
         $details = [
             'duree_semaines' => ($value = Input::int($_POST, 'duree_semaines', 0)) > 0 ? $value : null,
             'seances_par_semaine' => Input::string($_POST, 'seances_par_semaine', 50),
@@ -135,7 +122,10 @@ class AdminController extends BaseController
             'benefices' => Input::string($_POST, 'benefices', 3000),
         ];
 
-        $this->programmeRepository->create($title, $description, $niveau, $objectif, $details);
+        $created = $this->programmeAdminService->createProgramme($title, $description, $niveau, $objectif, $details);
+        if (!$created) {
+            $this->redirect('/admin');
+        }
         $this->redirect('/admin');
     }
 
@@ -149,10 +139,6 @@ class AdminController extends BaseController
         $niveau = Input::string($_POST, 'niveau', 60);
         $objectif = Input::string($_POST, 'objectif', 120);
 
-        if ($id <= 0 || $title === '' || $description === '') {
-            $this->redirect('/admin');
-        }
-
         $details = [
             'duree_semaines' => ($value = Input::int($_POST, 'duree_semaines', 0)) > 0 ? $value : null,
             'seances_par_semaine' => Input::string($_POST, 'seances_par_semaine', 50),
@@ -163,7 +149,17 @@ class AdminController extends BaseController
             'benefices' => Input::string($_POST, 'benefices', 3000),
         ];
 
-        $this->programmeRepository->update($id, $title, $description, $niveau, $objectif, $details);
+        $updated = $this->programmeAdminService->updateProgramme(
+            $id,
+            $title,
+            $description,
+            $niveau,
+            $objectif,
+            $details
+        );
+        if (!$updated) {
+            $this->redirect('/admin');
+        }
         $this->redirect('/admin');
     }
 
@@ -172,11 +168,10 @@ class AdminController extends BaseController
         $this->requireCsrf();
 
         $programmeId = Input::int($_POST, 'delete_programme', 0);
-        if ($programmeId <= 0) {
+        $deleted = $this->programmeAdminService->deleteProgramme($programmeId);
+        if (!$deleted) {
             $this->redirect('/admin');
         }
-
-        $this->programmeRepository->delete($programmeId);
         $this->redirect('/admin');
     }
 
@@ -193,11 +188,19 @@ class AdminController extends BaseController
         $horaires = Input::string($_POST, 'horaires', 120);
         $description = Input::string($_POST, 'description', 2000);
 
-        if ($nom === '' || $ville === '' || $adresse === '') {
+        $created = $this->salleAdminService->createSalle(
+            $nom,
+            $ville,
+            $adresse,
+            $codePostal,
+            $telephone,
+            $email,
+            $horaires,
+            $description
+        );
+        if (!$created) {
             $this->redirect('/admin');
         }
-
-        $this->salleRepository->create($nom, $ville, $adresse, $codePostal, $telephone, $email, $horaires, $description);
         $this->redirect('/admin');
     }
 
@@ -215,11 +218,20 @@ class AdminController extends BaseController
         $horaires = Input::string($_POST, 'horaires', 120);
         $description = Input::string($_POST, 'description', 2000);
 
-        if ($id <= 0 || $nom === '' || $ville === '' || $adresse === '') {
+        $updated = $this->salleAdminService->updateSalle(
+            $id,
+            $nom,
+            $ville,
+            $adresse,
+            $codePostal,
+            $telephone,
+            $email,
+            $horaires,
+            $description
+        );
+        if (!$updated) {
             $this->redirect('/admin');
         }
-
-        $this->salleRepository->update($id, $nom, $ville, $adresse, $codePostal, $telephone, $email, $horaires, $description);
         $this->redirect('/admin');
     }
 
@@ -228,11 +240,10 @@ class AdminController extends BaseController
         $this->requireCsrf();
 
         $id = Input::int($_POST, 'delete_salle', 0);
-        if ($id <= 0) {
+        $deleted = $this->salleAdminService->deleteSalle($id);
+        if (!$deleted) {
             $this->redirect('/admin');
         }
-
-        $this->salleRepository->delete($id);
         $this->redirect('/admin');
     }
 }

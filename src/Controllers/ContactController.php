@@ -3,15 +3,18 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
+use App\Service\ContactService;
 use App\Security\Input;
 
 class ContactController extends BaseController
 {
     private Csrf $csrf;
+    private ContactService $contactService;
 
     public function __construct()
     {
         $this->csrf = new Csrf();
+        $this->contactService = new ContactService();
     }
 
     public function index(): void
@@ -36,19 +39,17 @@ class ContactController extends BaseController
             } elseif ($old['nom'] === '' || $old['email'] === '' || $old['message'] === '') {
                 $error = 'Tous les champs sont obligatoires.';
             } else {
-                $safeEmail = str_replace(["\r", "\n", "%0a", "%0d"], '', $old['email']);
-                $subject = sprintf('Message de %s via Fitwings', $old['nom']);
-                $body = "Nom : {$old['nom']}\nEmail : {$old['email']}\n\nMessage :\n{$old['message']}";
-                $headers = [
-                    'From: noreply@fitwings.fr',
-                    'Reply-To: ' . $safeEmail,
-                ];
+                $result = $this->contactService->sendMessage(
+                    $old['nom'],
+                    $old['email'],
+                    $old['message'],
+                    $_SERVER['REMOTE_ADDR'] ?? '',
+                    $_SERVER['HTTP_USER_AGENT'] ?? ''
+                );
+                $success = $result['success'];
+                $error = $result['error'];
 
-                $success = mail('contact@fitwings.fr', $subject, $body, implode("\r\n", $headers));
-
-                if (!$success) {
-                    $error = "Le message n'a pas pu être envoyé pour le moment.";
-                } else {
+                if ($success) {
                     $old = ['nom' => '', 'email' => '', 'message' => ''];
                 }
             }

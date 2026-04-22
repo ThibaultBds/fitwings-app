@@ -3,17 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\CandidatureRepository;
+use App\Service\CandidatureService;
 use App\Security\Input;
 
 class CarriereController extends BaseController
 {
-    private CandidatureRepository $candidatureRepository;
+    private CandidatureService $candidatureService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->candidatureRepository = new CandidatureRepository();
+        $this->candidatureService = new CandidatureService();
         $this->csrf = new Csrf();
     }
 
@@ -29,12 +29,9 @@ class CarriereController extends BaseController
                 $telephone = Input::string($_POST, 'telephone', 30);
                 $message = Input::string($_POST, 'message', 2000);
 
-                if ($nom && $email && $message) {
-                    $this->candidatureRepository->create($nom, $email, $telephone, '', $message);
-                    $success = true;
-                } else {
-                    $erreur = "Tous les champs obligatoires doivent être remplis.";
-                }
+                $result = $this->candidatureService->submit($nom, $email, $telephone, $message);
+                $success = $result['success'];
+                $erreur = $result['error'];
             } else {
                 $erreur = "Token invalide.";
             }

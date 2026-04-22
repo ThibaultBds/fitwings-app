@@ -3,23 +3,23 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\UserProgrammeRepository;
+use App\Service\UserProgrammeService;
 use App\Security\Input;
 
 class MesProgrammesController extends BaseController
 {
-    private UserProgrammeRepository $userProgrammeRepository;
+    private UserProgrammeService $userProgrammeService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->userProgrammeRepository = new UserProgrammeRepository();
+        $this->userProgrammeService = new UserProgrammeService();
         $this->csrf = new Csrf();
     }
 
     public function index(): void
     {
-        $programmes = $this->userProgrammeRepository->getByUserId($_SESSION['user']['id']);
+        $programmes = $this->userProgrammeService->getUserProgrammes($_SESSION['user']['id']);
         $this->render('programmes/my-progs', [
             'programmes'  => $programmes,
             'csrf_token'  => $this->csrf->generate(),
@@ -34,9 +34,7 @@ class MesProgrammesController extends BaseController
         }
 
         $programmeId = Input::int($_POST, 'programme_id', 0);
-        if ($programmeId > 0) {
-            $this->userProgrammeRepository->remove($_SESSION['user']['id'], $programmeId);
-        }
+        $this->userProgrammeService->unsubscribe($_SESSION['user']['id'], $programmeId);
 
         $this->redirect('/mes-programmes');
     }

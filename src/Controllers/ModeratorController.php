@@ -3,24 +3,24 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\TemoignageRepository;
+use App\Service\TemoignageModerationService;
 use App\Security\Input;
 
 class ModeratorController extends BaseController
 {
-    private TemoignageRepository $temoignageRepository;
+    private TemoignageModerationService $temoignageModerationService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->temoignageRepository = new TemoignageRepository();
+        $this->temoignageModerationService = new TemoignageModerationService();
         $this->csrf = new Csrf();
     }
 
     public function index()
     {
         $this->render('moderator/index', [
-            'temoignages_attente' => $this->temoignageRepository->getEnAttente(),
+            'temoignages_attente' => $this->temoignageModerationService->getPending(),
             'csrf_token' => $this->csrf->generate(),
         ]);
     }
@@ -34,11 +34,10 @@ class ModeratorController extends BaseController
         $id = Input::int($_POST, 'id', 0);
         $statut = Input::string($_POST, 'statut', 20);
 
-        if ($id <= 0 || !Input::oneOf($statut, ['approuve', 'refuse'])) {
+        $updated = $this->temoignageModerationService->updateStatus($id, $statut, ['approuve', 'refuse']);
+        if (!$updated) {
             $this->redirect('/moderator');
         }
-
-        $this->temoignageRepository->updateStatut($id, $statut);
         $this->redirect('/moderator');
     }
 }

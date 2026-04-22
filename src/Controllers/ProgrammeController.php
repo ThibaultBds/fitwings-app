@@ -3,20 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\ProgrammeRepository;
-use App\Repositories\UserProgrammeRepository;
+use App\Service\ProgrammeService;
 use App\Security\Input;
 
 class ProgrammeController extends BaseController
 {
-    private ProgrammeRepository $programmeRepository;
-    private UserProgrammeRepository $userProgrammeRepository;
+    private ProgrammeService $programmeService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->programmeRepository = new ProgrammeRepository();
-        $this->userProgrammeRepository = new UserProgrammeRepository();
+        $this->programmeService = new ProgrammeService();
         $this->csrf = new Csrf();
     }
 
@@ -25,11 +22,7 @@ class ProgrammeController extends BaseController
         $objectif = Input::string($_GET, 'objectif', 120);
         $niveau = Input::string($_GET, 'niveau', 120);
 
-        if ($objectif === '' && $niveau === '') {
-            $programmes = $this->programmeRepository->getAll();
-        } else {
-            $programmes = $this->programmeRepository->getFiltered($objectif, $niveau);
-        }
+        $programmes = $this->programmeService->listProgrammes($objectif, $niveau);
 
         $this->render('programmes/index', [
             'programmes' => $programmes,
@@ -41,16 +34,12 @@ class ProgrammeController extends BaseController
     public function show()
     {
         $id = Input::int($_GET, 'id', 0);
-        $programme = $this->programmeRepository->findById($id);
-
-        $alreadyEnrolled = false;
-        if (isset($_SESSION['user'])) {
-            $alreadyEnrolled = $this->userProgrammeRepository->isEnrolled($_SESSION['user']['id'], $id);
-        }
+        $userId = $_SESSION['user']['id'] ?? null;
+        $detail = $this->programmeService->getProgrammeDetail($id, $userId ? (int) $userId : null);
 
         $this->render('programmes/show', [
-            'programme' => $programme,
-            'alreadyEnrolled' => $alreadyEnrolled,
+            'programme' => $detail['programme'],
+            'alreadyEnrolled' => $detail['alreadyEnrolled'],
             'csrf_token' => $this->csrf->generate(),
         ]);
     }
@@ -66,7 +55,7 @@ class ProgrammeController extends BaseController
             $this->redirect('/programmes');
         }
 
-        $this->userProgrammeRepository->add($_SESSION['user']['id'], $id);
+        $this->programmeService->enroll((int) $_SESSION['user']['id'], $id);
         $this->redirect('/programmes/show?id=' . $id);
     }
 }

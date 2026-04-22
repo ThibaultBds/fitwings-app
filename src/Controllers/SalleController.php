@@ -2,27 +2,23 @@
 
 namespace App\Controllers;
 
-use App\Repositories\SalleRepository;
+use App\Service\SalleService;
 use App\Security\Input;
 
 class SalleController extends BaseController
 {
-    private SalleRepository $salleRepository;
+    private SalleService $salleService;
 
     public function __construct()
     {
-        $this->salleRepository = new SalleRepository();
+        $this->salleService = new SalleService();
     }
 
     public function index()
     {
         $ville = Input::string($_GET, 'ville', 120);
 
-        if ($ville === '') {
-            $salles = $this->salleRepository->getAll();
-        } else {
-            $salles = $this->salleRepository->findByVille($ville);
-        }
+        $salles = $this->salleService->listSalles($ville);
 
         $this->render('salles/index', ['salles' => $salles, 'ville' => $ville]);
     }
@@ -30,7 +26,7 @@ class SalleController extends BaseController
     public function show()
     {
         $id = Input::int($_GET, 'id', 0);
-        $salle = $this->salleRepository->findById($id);
+        $salle = $this->salleService->getSalle($id);
         $this->render('salles/show', ['salle' => $salle]);
     }
 }

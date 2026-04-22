@@ -3,17 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\ReservationRepository;
+use App\Service\ReservationService;
 use App\Security\Input;
 
 class ReservationController extends BaseController
 {
-    private ReservationRepository $reservationRepository;
+    private ReservationService $reservationService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->reservationRepository = new ReservationRepository();
+        $this->reservationService = new ReservationService();
         $this->csrf = new Csrf();
     }
 
@@ -32,12 +32,9 @@ class ReservationController extends BaseController
             $cours = Input::string($_POST, 'cours', 120);
             $message = Input::string($_POST, 'message', 1000);
 
-            if ($nom === '' || $email === '' || $cours === '') {
-                $erreur = 'Veuillez remplir tous les champs obligatoires.';
-            } else {
-                $this->reservationRepository->create($nom, $email, $cours, $message);
-                $success = true;
-            }
+            $result = $this->reservationService->reserve($nom, $email, $cours, $message);
+            $success = $result['success'];
+            $erreur = $result['error'];
         }
 
         $this->render('pages/cours', [

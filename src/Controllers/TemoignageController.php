@@ -3,17 +3,17 @@
 namespace App\Controllers;
 
 use App\Core\Csrf;
-use App\Repositories\TemoignageRepository;
+use App\Service\TemoignageService;
 use App\Security\Input;
 
 class TemoignageController extends BaseController
 {
-    private TemoignageRepository $temoignageRepository;
+    private TemoignageService $temoignageService;
     private Csrf $csrf;
 
     public function __construct()
     {
-        $this->temoignageRepository = new TemoignageRepository();
+        $this->temoignageService = new TemoignageService();
         $this->csrf = new Csrf();
     }
 
@@ -23,24 +23,23 @@ class TemoignageController extends BaseController
         $erreur = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_SESSION['user']['id'])) {
-                $erreur = "Vous devez être connecté pour publier un témoignage.";
-            } elseif ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
+            if ($this->csrf->verify($_POST['csrf_token'] ?? '')) {
                 $note = Input::int($_POST, 'note', 0);
                 $contenu = Input::string($_POST, 'contenu', 300);
 
-                if ($note >= 1 && $note <= 5 && $contenu) {
-                    $this->temoignageRepository->create($_SESSION['user']['id'], $note, $contenu);
-                    $success = true;
-                } else {
-                    $erreur = "Tous les champs doivent être remplis.";
-                }
+                $result = $this->temoignageService->submit(
+                    $_SESSION['user']['id'] ?? null,
+                    $note,
+                    $contenu
+                );
+                $success = $result['success'];
+                $erreur = $result['error'];
             } else {
                 $erreur = "Token invalide.";
             }
         }
 
-        $temoignages = $this->temoignageRepository->getApprouves();
+        $temoignages = $this->temoignageService->getApproved();
 
         $this->render('pages/temoignages', [
             'success' => $success,
